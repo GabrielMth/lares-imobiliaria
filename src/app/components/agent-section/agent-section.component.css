@@ -1,0 +1,376 @@
+.agent-section {
+  background: var(--color-white);
+}
+
+.section-subtitle {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 4rem;
+  color: var(--color-dark-gray);
+  font-size: 1.1rem;
+}
+
+.carousel-container {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid var(--color-accent);
+  color: var(--color-accent);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+  font-weight: bold;
+}
+
+.carousel-btn:hover {
+  background: var(--color-accent);
+  color: var(--color-white);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-btn.prev {
+  left: -60px;
+}
+
+.carousel-btn.next {
+  right: -60px;
+}
+
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 2rem;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-medium-gray);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.indicator.active {
+  background: var(--color-accent);
+  width: 40px;
+  border-radius: 6px;
+}
+
+.agent-card {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 3rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.agent-image-wrapper {
+  background: linear-gradient(135deg, var(--color-accent) 0%, #2980b9 100%);
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agent-image-container {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+}
+
+.agent-image {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  display: block;
+}
+
+.agent-badge {
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-white);
+  color: var(--color-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+}
+
+.agent-info {
+  padding: 3rem 3rem 3rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.agent-name {
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.agent-role {
+  font-size: 1.1rem;
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.agent-description {
+  color: var(--color-secondary);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.agent-description p {
+  margin-bottom: 1rem;
+}
+
+.agent-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: var(--color-white);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.highlight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.highlight-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.highlight-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.highlight-text strong {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.highlight-text span {
+  font-size: 0.85rem;
+  color: var(--color-dark-gray);
+  margin-top: 0.25rem;
+}
+
+.agent-contact {
+  background: var(--color-light-gray);
+  padding: 2rem;
+  border-radius: 16px;
+  margin-top: auto;
+}
+
+.agent-contact h4 {
+  color: var(--color-primary);
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text);
+  font-weight: 600;
+  padding: 0.5rem;
+  background: var(--color-white);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+  background: var(--color-accent);
+  color: var(--color-white);
+  transform: translateX(5px);
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  color: var(--color-white);
+}
+
+.social-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.social-link.instagram {
+  background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+}
+
+.social-link.facebook {
+  background: #1877f2;
+}
+
+.social-link.linkedin {
+  background: #0077b5;
+}
+
+.social-link svg {
+  width: 20px;
+  height: 20px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+@media (max-width: 992px) {
+  .agent-card {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .agent-image-wrapper {
+    padding: 2rem 1.5rem;
+  }
+  
+  .agent-info {
+    padding: 2rem 1.5rem;
+  }
+  
+  .agent-highlights {
+    grid-template-columns: 1fr;
+  }
+  
+  .carousel-btn.prev {
+    left: 5px;
+    width: 45px;
+    height: 45px;
+  }
+  
+  .carousel-btn.next {
+    right: 5px;
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 768px) {
+  .agent-name {
+    font-size: 1.75rem;
+  }
+  
+  .agent-role {
+    font-size: 1rem;
+  }
+  
+  .agent-description {
+    font-size: 0.95rem;
+  }
+  
+  .social-links {
+    flex-direction: column;
+  }
+  
+  .social-link {
+    justify-content: center;
+  }
+  
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    background: rgba(52, 152, 219, 0.95);
+    color: white;
+    border: none;
+  }
+  
+  .carousel-btn:hover {
+    background: var(--color-accent);
+  }
+  
+  .carousel-btn.prev {
+    left: 10px;
+    top: 200px;
+  }
+  
+  .carousel-btn.next {
+    right: 10px;
+    top: 200px;
+  }
+  
+  .agent-image-wrapper {
+    padding: 2rem 1rem;
+  }
+  
+  .agent-image-container {
+    max-width: 280px;
+  }
+  
+  .agent-highlights {
+    padding: 1.5rem;
+  }
+  
+  .highlight {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .agent-contact {
+    padding: 1.5rem;
+  }
+}

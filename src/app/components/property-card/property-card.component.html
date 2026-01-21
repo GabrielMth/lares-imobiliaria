@@ -1,0 +1,95 @@
+<div class="property-card" *ngIf="property">
+  <div class="property-images">
+    <div class="main-image-container" *ngIf="property.urlsFotos && property.urlsFotos.length > 0">
+      <img [src]="'http://localhost:8080/uploads/' + property.urlsFotos[currentImageIndex]" [alt]="property.titulo"
+        class="main-image" (click)="openLightbox(currentImageIndex)">
+
+      <button class="nav-button prev" (click)="prevImage()" *ngIf="property.urlsFotos.length > 1">‹</button>
+      <button class="nav-button next" (click)="nextImage()" *ngIf="property.urlsFotos.length > 1">›</button>
+
+      <div class="image-indicators" *ngIf="property.urlsFotos.length > 1">
+        <span *ngFor="let img of property.urlsFotos; let i = index" class="indicator"
+          [class.active]="i === currentImageIndex" (click)="setImage(i)">
+        </span>
+      </div>
+
+      <span class="property-badge">{{ property.tipoImovel | titlecase }}</span>
+
+      <span class="transaction-badge" [class.venda]="property.status === 'VENDA'"
+        [class.aluguel]="property.status === 'ALUGUEL'">
+        {{ property.status | titlecase }}
+      </span>
+
+      <span class="featured-badge" *ngIf="property.featured">Destaque</span>
+    </div>
+
+    <div class="thumbnail-container" *ngIf="property.urlsFotos && property.urlsFotos.length > 1">
+      <img *ngFor="let img of property.urlsFotos.slice(0, 4); let i = index"
+        [src]="'http://localhost:8080/uploads/' + img" [alt]="property.titulo + ' - ' + (i + 1)" class="thumbnail"
+        [class.active]="i === currentImageIndex" (click)="setImage(i)">
+    </div>
+  </div>
+
+  <div class="property-content">
+    <h3 class="property-title">{{ property.titulo }}</h3>
+
+    <p class="property-location" *ngIf="property.endereco">
+      📍 {{ property.endereco.logradouro }}, {{ property.endereco.numero }} - {{ property.endereco.bairro }}, {{
+      property.endereco.cidade }}
+    </p>
+
+    <p class="property-location" *ngIf="!property.endereco">
+      📍 Localização sob consulta
+    </p>
+    <p class="property-price">{{ formatPrice(property.valor) }}</p>
+
+    <div class="property-features">
+      <span class="feature" *ngIf="property.quartos">
+        🛏️ {{ property.quartos }} {{ property.quartos === 1 ? 'Quarto' : 'Quartos' }}
+      </span>
+      <span class="feature" *ngIf="property.banheiros">
+        🚿 {{ property.banheiros }} {{ property.banheiros === 1 ? 'Banheiro' : 'Banheiros' }}
+      </span>
+      <span class="feature" *ngIf="property.vagasGaragem">
+        🚗 {{ property.vagasGaragem }} {{ property.vagasGaragem === 1 ? 'Vaga' : 'Vagas' }}
+      </span>
+      <span class="feature">
+        📐 {{ property.areaTotal }}m²
+      </span>
+    </div>
+
+    <p class="property-description">{{ property.descricao }}</p>
+
+    <button class="btn btn-whatsapp w-full" (click)="sendWhatsApp()">
+      📱 Mostrar Interesse
+    </button>
+  </div>
+
+  <div class="lightbox-overlay" *ngIf="showLightbox" (click)="closeLightbox()">
+    <div class="lightbox-content" (click)="$event.stopPropagation()">
+      <button class="lightbox-close" (click)="closeLightbox()">✕</button>
+
+      <button class="lightbox-nav prev" (click)="prevLightboxImage()"
+        *ngIf="property.urlsFotos && property.urlsFotos.length > 1">‹</button>
+
+      <div class="lightbox-image-container" *ngIf="property.urlsFotos">
+        <img [src]="'http://localhost:8080/uploads/' + property.urlsFotos[lightboxImageIndex]"
+          alt="{{ property.titulo }}" class="card-img">
+
+        <div class="lightbox-info">
+          <h4>{{ property.titulo }}</h4>
+          <p>{{ lightboxImageIndex + 1 }} / {{ property.urlsFotos.length }}</p>
+        </div>
+      </div>
+
+      <button class="lightbox-nav next" (click)="nextLightboxImage()"
+        *ngIf="property.urlsFotos && property.urlsFotos.length > 1">›</button>
+
+      <div class="lightbox-thumbnails" *ngIf="property.urlsFotos">
+        <img *ngFor="let img of property.urlsFotos; let i = index" [src]="'http://localhost:8080/uploads/' + img"
+          [alt]="property.titulo + ' - ' + (i + 1)" class="lightbox-thumbnail" [class.active]="i === lightboxImageIndex"
+          (click)="lightboxImageIndex = i">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+<section class="properties-section section" id="properties">
+  <div class="container">
+    <h2 class="section-title">Nossos Imóveis</h2>
+    <p class="section-subtitle">
+      Imóveis cuidadosamente selecionados para você. Confira nossa variedade de casas, 
+      apartamentos e terrenos disponíveis.
+    </p>
+    
+    <div class="filter-container">
+      <div class="filter-buttons">
+        <button class="filter-btn" [class.active]="selectedType === 'todos'" (click)="filterByType('todos')">
+          🏘️ Todos
+        </button>
+        <button class="filter-btn" [class.active]="selectedType === 'CASA'" (click)="filterByType('CASA')">
+          🏠 Casas
+        </button>
+        <button class="filter-btn" [class.active]="selectedType === 'APARTAMENTO'" (click)="filterByType('APARTAMENTO')">
+          🏢 Apartamentos
+        </button>
+        <button class="filter-btn" [class.active]="selectedType === 'TERRENO'" (click)="filterByType('TERRENO')">
+          🌳 Terrenos
+        </button>
+      </div>
+      
+      <div class="advanced-filters">
+        <div class="filter-group">
+          <label for="transaction">Tipo:</label>
+          <select id="transaction" (change)="onTransactionChange($event)" [(ngModel)]="selectedTransaction">
+            <option value="todos">Todos</option>
+            <option value="VENDA">Venda</option>
+            <option value="ALUGUEL">Aluguel</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label for="bedrooms">Quartos:</label>
+          <select id="bedrooms" (change)="onBedroomsChange($event)" [(ngModel)]="selectedBedrooms">
+            <option value="todos">Todos</option>
+            <option value="1">1+ Quarto</option>
+            <option value="2">2+ Quartos</option>
+            <option value="3">3+ Quartos</option>
+            <option value="4">4+ Quartos</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label for="minPrice">Preço Mín:</label>
+          <select id="minPrice" (change)="onPriceRangeChange($event, 'min')" [(ngModel)]="minPrice">
+            <option [value]="0">R$ 0</option>
+            <option [value]="100000">R$ 100.000</option>
+            <option [value]="300000">R$ 300.000</option>
+            <option [value]="500000">R$ 500.000</option>
+            <option [value]="1000000">R$ 1.000.000</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label for="maxPrice">Preço Máx:</label>
+          <select id="maxPrice" (change)="onPriceRangeChange($event, 'max')" [(ngModel)]="maxPrice">
+            <option [value]="500000">R$ 500.000</option>
+            <option [value]="1000000">R$ 1.000.000</option>
+            <option [value]="2000000">R$ 2.000.000</option>
+            <option [value]="5000000">R$ 5.000.000</option>
+            <option [value]="10000000">Sem limite</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    
+    <div class="results-count" *ngIf="!isLoading">
+      <p>{{ filteredProperties.length }} {{ filteredProperties.length === 1 ? 'imóvel encontrado' : 'imóveis encontrados' }}</p>
+    </div>
+
+    <div *ngIf="isLoading" style="text-align: center; padding: 2rem;">
+      <p>Carregando imóveis...</p>
+    </div>
+    
+    <div class="properties-grid" *ngIf="!isLoading">
+      <app-property-card 
+        *ngFor="let property of filteredProperties" 
+        [property]="property">
+      </app-property-card>
+    </div>
+    
+    <div class="no-results" *ngIf="!isLoading && filteredProperties.length === 0">
+      <p>😔 Nenhum imóvel encontrado com os filtros selecionados.</p>
+      <button class="btn btn-primary" (click)="resetFilters()">
+        Limpar Filtros
+      </button>
+    </div>
+  </div>
+</section>

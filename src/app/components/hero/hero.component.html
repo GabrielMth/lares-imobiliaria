@@ -1,0 +1,42 @@
+<section class="hero" id="home">
+  <div class="hero-background-slider">
+    <div 
+      *ngFor="let image of images; let i = index" 
+      class="hero-slide"
+      [class.active]="i === currentImageIndex"
+      [style.background-image]="'url(' + image + ')'">
+    </div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content container">
+    <div class="hero-text">
+      <h1 class="hero-title">Encontre Seu Lar Perfeito</h1>
+      <p class="hero-subtitle">
+        Transformamos sonhos em endereços. Há mais de 10 anos ajudando famílias a encontrar 
+        o imóvel ideal com atendimento personalizado, segurança e transparência.
+      </p>
+      <div class="hero-buttons">
+        <a href="#properties" class="btn btn-primary">Ver Imóveis</a>
+        <a href="https://wa.me/5518997287085?text=Olá!%20Gostaria%20de%20mais%20informações%20sobre%20imóveis" 
+           target="_blank" 
+           class="btn btn-whatsapp">
+          📱 Fale Conosco
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <h3>1200+</h3>
+          <p>Imóveis Vendidos</p>
+        </div>
+        <div class="stat">
+          <h3>950+</h3>
+          <p>Clientes Satisfeitos</p>
+        </div>
+        <div class="stat">
+          <h3>15+</h3>
+          <p>Imóveis Disponíveis</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

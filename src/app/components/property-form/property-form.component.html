@@ -1,0 +1,123 @@
+<div class="form-container">
+  <div class="form-card">
+    <h2>🏡 Cadastrar Novo Imóvel</h2>
+    <p class="subtitle">Preencha os dados abaixo para anunciar.</p>
+
+    <form (ngSubmit)="onSubmit()">
+
+      <h3 class="section-header">Informações Básicas</h3>
+
+      <div class="form-group">
+        <label>Título do Anúncio</label>
+        <input type="text" [(ngModel)]="imovel.titulo" name="titulo" placeholder="Ex: Casa Linda no Centro" required>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Tipo</label>
+          <select [(ngModel)]="imovel.tipoImovel" name="tipoImovel">
+            <option value="CASA">Casa</option>
+            <option value="APARTAMENTO">Apartamento</option>
+            <option value="TERRENO">Terreno</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Finalidade</label>
+          <select [(ngModel)]="imovel.status" name="status">
+            <option value="VENDA">Venda</option>
+            <option value="ALUGUEL">Aluguel</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Valor (R$)</label>
+        <input type="number" [(ngModel)]="imovel.valor" name="valor" required>
+      </div>
+
+      <div class="form-group">
+        <label>Descrição Completa</label>
+        <textarea [(ngModel)]="imovel.descricao" name="descricao" rows="4"
+          placeholder="Detalhes sobre o imóvel..."></textarea>
+      </div>
+
+      <h3 class="section-header">Detalhes do Imóvel</h3>
+
+      <div class="form-row four-cols">
+        <div class="form-group">
+          <label>Quartos</label>
+          <input type="number" [(ngModel)]="imovel.quartos" name="quartos">
+        </div>
+        <div class="form-group">
+          <label>Banheiros</label>
+          <input type="number" [(ngModel)]="imovel.banheiros" name="banheiros">
+        </div>
+        <div class="form-group">
+          <label>Vagas</label>
+          <input type="number" [(ngModel)]="imovel.vagasGaragem" name="vagasGaragem">
+        </div>
+        <div class="form-group">
+          <label>Area (m²)</label>
+          <input type="number" [(ngModel)]="imovel.areaTotal" name="areaTotal">
+        </div>
+      </div>
+
+      <h3 class="section-header">Endereço</h3>
+
+      <div class="form-row">
+        <div class="form-group cep-group">
+          <label>CEP</label>
+          <input type="text" [(ngModel)]="imovel.enderecos.cep" name="cep">
+        </div>
+        <div class="form-group city-group">
+          <label>Cidade</label>
+          <input type="text" [(ngModel)]="imovel.enderecos.cidade" name="cidade">
+        </div>
+        <div class="form-group uf-group">
+          <label>UF</label>
+          <input type="text" [(ngModel)]="imovel.enderecos.uf" name="uf" placeholder="SP" maxlength="2">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group street-group">
+          <label>Rua/Logradouro</label>
+          <input type="text" [(ngModel)]="imovel.enderecos.logradouro" name="logradouro">
+        </div>
+        <div class="form-group number-group">
+          <label>Número</label>
+          <input type="text" [(ngModel)]="imovel.enderecos.numero" name="numero">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Bairro</label>
+        <input type="text" [(ngModel)]="imovel.enderecos.bairro" name="bairro">
+      </div>
+
+      <h3 class="section-header">Fotos do Imóvel</h3>
+
+        <div class="form-group">
+          <label>Selecione as fotos (segure Ctrl para selecionar várias)</label>
+
+          <input type="file" multiple (change)="onFileSelected($event)" accept="image/*" class="file-input">
+        </div>
+
+        <div class="fotos-preview" *ngIf="selectedFiles.length > 0">
+          <p><strong>{{ selectedFiles.length }} arquivos selecionados:</strong></p>
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let file of selectedFiles" style="margin-bottom: 5px;">
+              📸 {{ file.name }} <span style="color: #7f8c8d; font-size: 0.9em;">({{ (file.size / 1024 /
+                1024).toFixed(2) }} MB)</span>
+            </li>
+          </ul>
+        </div>
+
+        <button type="submit" class="btn-submit" [disabled]="isLoading">
+          {{ isLoading ? 'Cadastrando...' : 'Salvar Imóvel' }}
+        </button>
+
+    </form>
+  </div>
+</div>
