@@ -1,123 +1,189 @@
-<div class="form-container">
-  <div class="form-card">
-    <h2>🏡 Cadastrar Novo Imóvel</h2>
-    <p class="subtitle">Preencha os dados abaixo para anunciar.</p>
+<div class="property-form">
+  <h2 class="form-title">
+    {{ property ? '✏️ Editar Imóvel' : '➕ Adicionar Novo Imóvel' }}
+  </h2>
 
-    <form (ngSubmit)="onSubmit()">
+  <form (ngSubmit)="onSubmit()" #propertyForm="ngForm">
+    <div class="form-grid">
 
-      <h3 class="section-header">Informações Básicas</h3>
-
+      <!-- Tipo -->
       <div class="form-group">
-        <label>Título do Anúncio</label>
-        <input type="text" [(ngModel)]="imovel.titulo" name="titulo" placeholder="Ex: Casa Linda no Centro" required>
+        <label for="type">Tipo de Imóvel *</label>
+        <select id="type" name="type" [(ngModel)]="formData.type" required>
+          <option value="casa">🏠 Casa</option>
+          <option value="apartamento">🏢 Apartamento</option>
+          <option value="terreno">🌳 Terreno</option>
+        </select>
       </div>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label>Tipo</label>
-          <select [(ngModel)]="imovel.tipoImovel" name="tipoImovel">
-            <option value="CASA">Casa</option>
-            <option value="APARTAMENTO">Apartamento</option>
-            <option value="TERRENO">Terreno</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Finalidade</label>
-          <select [(ngModel)]="imovel.status" name="status">
-            <option value="VENDA">Venda</option>
-            <option value="ALUGUEL">Aluguel</option>
-          </select>
-        </div>
-      </div>
-
+      <!-- Transação -->
       <div class="form-group">
-        <label>Valor (R$)</label>
-        <input type="number" [(ngModel)]="imovel.valor" name="valor" required>
+        <label for="transactionType">Tipo de Transação *</label>
+        <select id="transactionType" name="transactionType" [(ngModel)]="formData.transactionType" required>
+          <option value="venda">💰 Venda</option>
+          <option value="aluguel">🏷️ Aluguel</option>
+        </select>
       </div>
 
+      <!-- Título -->
+      <div class="form-group full-width">
+        <label for="title">Título do Imóvel *</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          [(ngModel)]="formData.title"
+          placeholder="Ex: Casa Moderna com Piscina"
+          required>
+      </div>
+
+      <!-- Preço -->
       <div class="form-group">
-        <label>Descrição Completa</label>
-        <textarea [(ngModel)]="imovel.descricao" name="descricao" rows="4"
-          placeholder="Detalhes sobre o imóvel..."></textarea>
+        <label for="price">Preço (R$) *</label>
+        <input
+          type="number"
+          id="price"
+          name="price"
+          [(ngModel)]="formData.price"
+          placeholder="850000"
+          min="0"
+          required>
       </div>
 
-      <h3 class="section-header">Detalhes do Imóvel</h3>
-
-      <div class="form-row four-cols">
-        <div class="form-group">
-          <label>Quartos</label>
-          <input type="number" [(ngModel)]="imovel.quartos" name="quartos">
-        </div>
-        <div class="form-group">
-          <label>Banheiros</label>
-          <input type="number" [(ngModel)]="imovel.banheiros" name="banheiros">
-        </div>
-        <div class="form-group">
-          <label>Vagas</label>
-          <input type="number" [(ngModel)]="imovel.vagasGaragem" name="vagasGaragem">
-        </div>
-        <div class="form-group">
-          <label>Area (m²)</label>
-          <input type="number" [(ngModel)]="imovel.areaTotal" name="areaTotal">
-        </div>
-      </div>
-
-      <h3 class="section-header">Endereço</h3>
-
-      <div class="form-row">
-        <div class="form-group cep-group">
-          <label>CEP</label>
-          <input type="text" [(ngModel)]="imovel.enderecos.cep" name="cep">
-        </div>
-        <div class="form-group city-group">
-          <label>Cidade</label>
-          <input type="text" [(ngModel)]="imovel.enderecos.cidade" name="cidade">
-        </div>
-        <div class="form-group uf-group">
-          <label>UF</label>
-          <input type="text" [(ngModel)]="imovel.enderecos.uf" name="uf" placeholder="SP" maxlength="2">
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group street-group">
-          <label>Rua/Logradouro</label>
-          <input type="text" [(ngModel)]="imovel.enderecos.logradouro" name="logradouro">
-        </div>
-        <div class="form-group number-group">
-          <label>Número</label>
-          <input type="text" [(ngModel)]="imovel.enderecos.numero" name="numero">
-        </div>
-      </div>
-
+      <!-- Área -->
       <div class="form-group">
-        <label>Bairro</label>
-        <input type="text" [(ngModel)]="imovel.enderecos.bairro" name="bairro">
+        <label for="area">Área (m²) *</label>
+        <input
+          type="number"
+          id="area"
+          name="area"
+          [(ngModel)]="formData.area"
+          placeholder="280"
+          min="0"
+          required>
       </div>
 
-      <h3 class="section-header">Fotos do Imóvel</h3>
+      <!-- Quartos -->
+      <div class="form-group">
+        <label for="bedrooms">Quartos</label>
+        <input
+          type="number"
+          id="bedrooms"
+          name="bedrooms"
+          [(ngModel)]="formData.bedrooms"
+          placeholder="4"
+          min="0">
+      </div>
 
-        <div class="form-group">
-          <label>Selecione as fotos (segure Ctrl para selecionar várias)</label>
+      <!-- Banheiros -->
+      <div class="form-group">
+        <label for="bathrooms">Banheiros</label>
+        <input
+          type="number"
+          id="bathrooms"
+          name="bathrooms"
+          [(ngModel)]="formData.bathrooms"
+          placeholder="3"
+          min="0">
+      </div>
 
-          <input type="file" multiple (change)="onFileSelected($event)" accept="image/*" class="file-input">
+      <!-- Vagas -->
+      <div class="form-group">
+        <label for="parking">Vagas de Garagem</label>
+        <input
+          type="number"
+          id="parking"
+          name="parking"
+          [(ngModel)]="formData.parking"
+          placeholder="2"
+          min="0">
+      </div>
+
+      <!-- Endereço -->
+      <div class="form-group">
+        <label for="address">Endereço *</label>
+        <input
+          type="text"
+          id="address"
+          name="address"
+          [(ngModel)]="formData.address"
+          placeholder="Rua das Flores, 123"
+          required>
+      </div>
+
+      <!-- Cidade / Bairro -->
+      <div class="form-group">
+        <label for="city">Cidade/Bairro *</label>
+        <input
+          type="text"
+          id="city"
+          name="city"
+          [(ngModel)]="formData.city"
+          placeholder="Centro"
+          required>
+      </div>
+
+      <!-- Descrição -->
+      <div class="form-group full-width">
+        <label for="description">Descrição *</label>
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="formData.description"
+          rows="4"
+          placeholder="Descreva as características principais do imóvel..."
+          required></textarea>
+      </div>
+
+      <!-- Imagem Principal -->
+      <div class="form-group full-width">
+        <label for="mainImage">URL da Imagem Principal *</label>
+        <input
+          type="url"
+          id="mainImage"
+          name="mainImage"
+          [(ngModel)]="formData.mainImage"
+          placeholder="https://exemplo.com/imagem.jpg"
+          required>
+        <small>Cole a URL completa da imagem (https://...)</small>
+      </div>
+
+      <!-- Galeria -->
+      <div class="form-group full-width">
+        <label>Galeria de Imagens (Até 4 imagens)</label>
+        <div class="images-grid">
+          <div class="image-input" *ngFor="let img of formData.images; let i = index">
+            <input
+              type="url"
+              [name]="'image' + i"
+              [ngModel]="formData.images[i]"
+              (ngModelChange)="updateImageArray(i, $event)"
+              [placeholder]="'URL da imagem ' + (i + 1)">
+          </div>
         </div>
+      </div>
 
-        <div class="fotos-preview" *ngIf="selectedFiles.length > 0">
-          <p><strong>{{ selectedFiles.length }} arquivos selecionados:</strong></p>
-          <ul style="list-style: none; padding: 0;">
-            <li *ngFor="let file of selectedFiles" style="margin-bottom: 5px;">
-              📸 {{ file.name }} <span style="color: #7f8c8d; font-size: 0.9em;">({{ (file.size / 1024 /
-                1024).toFixed(2) }} MB)</span>
-            </li>
-          </ul>
-        </div>
+      <!-- Destaque -->
+      <div class="form-group full-width">
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            name="featured"
+            [(ngModel)]="formData.featured">
+          <span>⭐ Marcar como Imóvel em Destaque</span>
+        </label>
+      </div>
 
-        <button type="submit" class="btn-submit" [disabled]="isLoading">
-          {{ isLoading ? 'Cadastrando...' : 'Salvar Imóvel' }}
-        </button>
+    </div>
 
-    </form>
-  </div>
+    <div class="form-actions">
+      <button type="button" class="btn btn-outline" (click)="cancel()">
+        Cancelar
+      </button>
+
+      <button type="submit" class="btn btn-primary" [disabled]="!propertyForm.form.valid">
+        {{ property ? '💾 Salvar Alterações' : '➕ Adicionar Imóvel' }}
+      </button>
+    </div>
+  </form>
 </div>

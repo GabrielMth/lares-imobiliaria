@@ -4,12 +4,12 @@
     <p class="section-subtitle">
       Conheça os profissionais dedicados que estão prontos para transformar seu sonho em realidade
     </p>
-    
+
     <div class="carousel-container" *ngIf="agents.length > 0">
       <button class="carousel-btn prev" (click)="prevAgent()" *ngIf="agents.length > 1">
         ‹
       </button>
-      
+
       <div class="agent-card">
         <div class="agent-image-wrapper">
           <div class="agent-image-container">
@@ -17,23 +17,23 @@
             <div class="agent-badge">⭐ Corretor(a) Certificado(a)</div>
           </div>
         </div>
-        
+
         <div class="agent-info">
           <h3 class="agent-name">{{ currentAgent.name }}</h3>
           <p class="agent-role">{{ currentAgent.role }}</p>
-          
+
           <div class="agent-description">
             <p>
-              Com anos de experiência no mercado imobiliário, estou comprometido(a) em ajudar você 
-              a encontrar o imóvel perfeito. Meu objetivo é transformar cada negociação em uma 
+              Com anos de experiência no mercado imobiliário, estou comprometido(a) em ajudar você
+              a encontrar o imóvel perfeito. Meu objetivo é transformar cada negociação em uma
               experiência positiva e memorável.
             </p>
             <p>
-              Seja comprando, vendendo ou alugando, conto com conhecimento profundo do mercado 
+              Seja comprando, vendendo ou alugando, conto com conhecimento profundo do mercado
               local e um portfólio diversificado de imóveis para atender suas necessidades.
             </p>
           </div>
-          
+
           <div class="agent-highlights">
             <div class="highlight">
               <div class="highlight-icon">🏆</div>
@@ -57,7 +57,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="agent-contact">
             <h4>Entre em Contato</h4>
             <div class="contact-info">
@@ -68,7 +68,7 @@
                 📧 {{ currentAgent.email }}
               </a>
             </div>
-            
+
             <div class="social-links">
               <a *ngIf="currentAgent.instagram" [href]="currentAgent.instagram" target="_blank" class="social-link instagram">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -82,27 +82,21 @@
                 </svg>
                 Facebook
               </a>
-              <a *ngIf="currentAgent.linkedin" [href]="currentAgent.linkedin" target="_blank" class="social-link linkedin">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-                LinkedIn
-              </a>
             </div>
-            
+
             <button class="btn btn-whatsapp w-full mt-3" (click)="sendWhatsApp()">
               📱 Fale Comigo no WhatsApp
             </button>
           </div>
         </div>
       </div>
-      
+
       <button class="carousel-btn next" (click)="nextAgent()" *ngIf="agents.length > 1">
         ›
       </button>
-      
+
       <div class="carousel-indicators" *ngIf="agents.length > 1">
-        <span 
+        <span
           *ngFor="let agent of agents; let i = index"
           class="indicator"
           [class.active]="i === currentAgentIndex"

@@ -1,5 +1,5 @@
 .properties-section {
-  background: var(--color-white);
+  background: white;
 }
 
 .section-subtitle {
@@ -132,22 +132,22 @@
   .filter-container {
     padding: 1.5rem;
   }
-  
+
   .filter-buttons {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .filter-btn {
     width: 100%;
     justify-content: center;
   }
-  
+
   .advanced-filters {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .properties-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;

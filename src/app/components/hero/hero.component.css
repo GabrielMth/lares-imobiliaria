@@ -101,20 +101,122 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+/* ===========================
+   HERO BUTTONS – 3D CHAMATIVO
+   =========================== */
+
 .hero-buttons {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   justify-content: center;
   flex-wrap: wrap;
   margin-bottom: 3rem;
 }
 
+/* BASE */
 .hero-buttons .btn {
-  padding: 1rem 2.5rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  min-width: 200px;
+  position: relative;
+  padding: 1.2rem 2.8rem;
+  min-width: 220px;
+
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+
+  color: #fff;
+
+  transform-style: preserve-3d;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
 }
+
+/* ===========================
+   BOTÃO PRINCIPAL (AZUL)
+   =========================== */
+.btn-primary {
+  background: linear-gradient(145deg, #1f3c88, #122b63);
+
+  box-shadow:
+    0 18px 35px rgba(31, 60, 136, 0.45),
+    0 6px 0 #0e1f45,
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+/* ===========================
+   BOTÃO WHATSAPP (VERDE)
+   =========================== */
+.btn-whatsapp {
+  background: linear-gradient(145deg, #25D366, #1ea955);
+
+  box-shadow:
+    0 18px 35px rgba(37, 211, 102, 0.45),
+    0 6px 0 #157a3c,
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* ===========================
+   EFEITO GLOW ANIMADO
+   =========================== */
+.hero-buttons .btn::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 18px;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.6),
+    rgba(255,255,255,0),
+    rgba(255,255,255,0.6)
+  );
+  opacity: 0;
+  filter: blur(8px);
+  transition: opacity 0.4s ease;
+}
+
+/* ===========================
+   HOVER – LEVANTA + GLOW
+   =========================== */
+.hero-buttons .btn:hover {
+  transform: translateY(-6px) scale(1.03);
+  filter: brightness(1.08);
+}
+
+.hero-buttons .btn:hover::before {
+  opacity: 0.8;
+}
+
+/* ===========================
+   ACTIVE – CLIQUE REAL
+   =========================== */
+.hero-buttons .btn:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.35),
+    inset 0 4px 8px rgba(0, 0, 0, 0.35);
+}
+
+/* ===========================
+   MOBILE
+   =========================== */
+@media (max-width: 600px) {
+  .hero-buttons .btn {
+    width: 100%;
+    max-width: 340px;
+  }
+}
+
 
 .hero-stats {
   display: grid;
@@ -149,30 +251,30 @@
     min-height: 90vh;
     padding-top: 100px;
   }
-  
+
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1.1rem;
   }
-  
+
   .hero-buttons {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .hero-buttons .btn {
     width: 100%;
     max-width: 300px;
   }
-  
+
   .hero-stats {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .stat h3 {
     font-size: 2rem;
   }

@@ -1,0 +1,183 @@
+<div class="admin-dashboard">
+  <!-- Header -->
+  <div class="admin-header">
+    <div class="container">
+      <div class="header-content">
+        <div>
+          <h1>🏠 Painel Administrativo</h1>
+          <p>BARRIOS Imobiliária - Gestão de Imóveis</p>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn btn-primary" (click)="openAddForm()">
+            ➕ Adicionar Imóvel
+          </button>
+
+          <a routerLink="/" class="btn btn-outline">
+            🏡 Ver Site
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">🏘️</div>
+          <div class="stat-info">
+            <h3>{{ properties.length }}</h3>
+            <p>Total de Imóveis</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🏡</div>
+          <div class="stat-info">
+           <h3>{{ totalCasas }}</h3>
+            <p>Casas</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🏢</div>
+          <div class="stat-info">
+           <h3>{{ totalApartamentos }}</h3>
+            <p>Apartamentos</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🌳</div>
+          <div class="stat-info">
+            <h3>{{ totalTerrenos }}</h3>
+            <p>Terrenos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Properties List -->
+  <div class="properties-section">
+    <div class="container">
+      <h2 class="section-title">Imóveis Cadastrados</h2>
+
+      <div class="properties-table-container">
+        <table class="properties-table">
+          <thead>
+            <tr>
+              <th>Foto</th>
+              <th>Título</th>
+              <th>Tipo</th>
+              <th>Status</th>
+              <th>Preço</th>
+              <th>Área</th>
+              <th>Localização</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let property of properties">
+              <!-- Foto -->
+              <td>
+                <img
+                  [src]="property.urlsFotos?.[0] || '/assets/images/sem-imagem.jpg'"
+                  [alt]="property.titulo"
+                  class="property-thumbnail">
+              </td>
+
+              <!-- Título -->
+              <td>
+                <div class="property-title-cell">
+                  <strong>{{ property.titulo }}</strong>
+                  <span class="featured-tag" *ngIf="property.featured">⭐ Destaque</span>
+                </div>
+              </td>
+
+              <!-- Tipo -->
+              <td>
+                <span class="type-badge" [attr.data-type]="property.tipoImovel">
+                  {{ getTipoImovelLabel(property.tipoImovel) }}
+                </span>
+              </td>
+
+              <!-- Status -->
+              <td>
+                <span class="transaction-badge" [attr.data-transaction]="property.status">
+                  {{ getStatusLabel(property.status) }}
+                </span>
+              </td>
+
+              <!-- Preço -->
+              <td class="price-cell">
+                {{ property.valor | currency:'BRL':'symbol':'1.0-0' }}
+              </td>
+
+              <!-- Área -->
+              <td>{{ property.areaTotal }} m²</td>
+
+              <!-- Localização -->
+              <td>
+                <div class="location-cell">
+                  <span>{{ property.endereco.logradouro }}, {{ property.endereco.numero }}</span>
+                  <small>{{ property.endereco.bairro }} - {{ property.endereco.cidade }}</small>
+                </div>
+              </td>
+
+              <!-- Ações -->
+              <td>
+                <div class="action-buttons">
+                  <button class="btn-icon btn-edit" (click)="openEditForm(property)" title="Editar">
+                    ✏️
+                  </button>
+                  <button class="btn-icon btn-delete" (click)="confirmDelete(property)" title="Excluir">
+                    🗑️
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="empty-state" *ngIf="properties.length === 0">
+          <div class="empty-icon">📭</div>
+          <h3>Nenhum imóvel cadastrado</h3>
+          <p>Clique em "Adicionar Imóvel" para começar</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Property Form Modal -->
+  <div class="modal-overlay" *ngIf="showForm" (click)="closeForm()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="modal-close" (click)="closeForm()">✕</button>
+
+      <app-property-form
+        [property]="editingProperty"
+        (propertySaved)="onPropertySaved()"
+        (formCancelled)="closeForm()">
+      </app-property-form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-overlay" *ngIf="showDeleteConfirm" (click)="cancelDelete()">
+    <div class="modal-content confirm-modal" (click)="$event.stopPropagation()">
+      <div class="confirm-icon">⚠️</div>
+      <h3>Confirmar Exclusão</h3>
+      <p>Tem certeza que deseja excluir o imóvel:</p>
+
+      <strong>{{ propertyToDelete?.titulo }}</strong>
+
+      <div class="confirm-buttons">
+        <button class="btn btn-outline" (click)="cancelDelete()">Cancelar</button>
+        <button class="btn btn-danger" (click)="deleteProperty()">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>

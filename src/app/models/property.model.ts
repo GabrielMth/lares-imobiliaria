@@ -1,4 +1,4 @@
-export type TipoImovel = 'CASA' | 'APARTAMENTO' | 'TERRENO';
+export type TipoImovel = 'CASA' | 'APARTAMENTO' | 'TERRENO' | 'CHACARA' | 'BARRACAO' | 'SITIO';
 export type StatusImovel = 'VENDA' | 'ALUGUEL' | 'DISPONIVEL';
 
 export interface Endereco {
@@ -14,20 +14,20 @@ export interface Property {
   id: number;
   titulo: string;
   descricao: string;
-  valor: number;           
-  tipoImovel: TipoImovel;  
+  valor: number;
+  tipoImovel: TipoImovel;
   status: StatusImovel;
-  
-  areaTotal: number;      
-  areaConstruida: number;
-  
-  quartos: number;         
-  banheiros: number;       
-  vagasGaragem: number;    
 
-  endereco: Endereco;      
-  
-  urlsFotos: string[];     
+  areaTotal: number;
+  areaConstruida: number;
+
+  quartos: number;
+  banheiros: number;
+  vagasGaragem: number;
+
+  endereco: Endereco;
+
+  urlsFotos: string[];
   featured?: boolean;
 }
 export interface Agent {
@@ -56,22 +56,22 @@ export interface EnderecoRequest {
 export interface PropertyRequest {
   titulo: string;
   descricao: string;
-  
+
   tipoImovel: TipoImovel;
   status: StatusImovel;
-  
+
   valor: number;
-  
+
   areaTotal: number;
   areaConstruida: number;
-  
+
   quartos: number;
   banheiros: number;
   vagasGaragem: number;
-  
+
   enderecos: EnderecoRequest;
-  
-  urlsFotos?: string[]; 
+
+  urlsFotos?: string[];
 }
 
 // Equivalente ao ImovelResponseDto e ImovelDetailDto
@@ -79,13 +79,13 @@ export interface PropertyResponse {
   id: number;
   titulo: string;
   valor: number;
-  
+
   cidade: string;
   logradouro: string;
   bairro: string;
-  
-  urlsFotos: string[]; 
-  
+
+  urlsFotos: string[];
+
   descricao?: string;
   quartos?: number;
   vagas?: number;

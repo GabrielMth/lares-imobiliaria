@@ -9,14 +9,14 @@ export class MockDataService {
   private agents: Agent[] = [
     {
       id: 1,
-      name: 'Viviana Barros',
-      role: 'Corretora de Imóveis | CRECI 12345-F',
-      phone: '+55 (18) 99728-7085',
-      email: 'viviana.barros@laresimobiliaria.com.br',
+      name: 'Viviana Barrios',
+      role: 'Corretora de Imóveis | CRECI 250472',
+      phone: '+55 (18) 99631-2445',
+      email: 'psvivianabarrios@gmail.com',
       photo: 'assets/images/agente-viviana.png',
-      instagram: 'https://instagram.com/laresimobiliaria',
+      instagram: 'https://instagram.com/viviana_barrios',
       linkedin: 'https://linkedin.com/in/viviana-barros',
-      facebook: 'https://facebook.com/laresimobiliaria'
+      facebook: 'https://www.facebook.com/consultoravivianab/'
     },
     // {
     //   id: 2,
@@ -47,7 +47,7 @@ export class MockDataService {
   getAgents(): Agent[] {
     return this.agents;
   }
-  
+
   getAgent(): Agent {
     return this.agents[0];
   }
