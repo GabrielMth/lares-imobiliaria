@@ -114,7 +114,7 @@
 
 .properties-table thead {
   background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
-  color: white;
+  color: black;
 }
 
 .properties-table th {

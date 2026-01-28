@@ -1,17 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { LoginRequest, LoginResponse, UsuarioRequest, UsuarioResponse } from '../models/auth.model';
+import { environment } from '../../environments/enviroment';
+import {
+  LoginRequest,
+  LoginResponse,
+  UsuarioRequest,
+  UsuarioResponse
+} from '../models/auth.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  // Ajuste a porta se necessário
-  private readonly API_URL = 'http://localhost:8080/auth';
+  private readonly API_URL = `${environment.apiUrl}/auth`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   login(dados: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.API_URL}/login`, dados).pipe(
@@ -28,7 +33,7 @@ export class AuthService {
     return this.http.post<UsuarioResponse>(`${this.API_URL}/usuarios`, dados);
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user_name');
   }

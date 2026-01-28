@@ -12,19 +12,19 @@ import { AuthService } from '../../services/auth-service.service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  username = ''; 
+  username = '';
   password = '';
   isLoading = false;
   errorMessage = '';
 
   constructor(
     private router: Router,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+  ) {}
 
   onSubmit() {
     if (!this.username || !this.password) {
-      alert('Preencha todos os campos!');
+      console.log("Preencha todos os campos!")
       return;
     }
 
@@ -34,16 +34,22 @@ export class LoginComponent {
     this.authService.login({ username: this.username, password: this.password })
       .subscribe({
         next: (response) => {
-          console.log('Login com sucesso!', response);
           this.isLoading = false;
-          this.router.navigate(['/cadastrar-imovel']);
+
+          console.log("Ok logado!")
+
+          setTimeout(() => {
+            this.router.navigate(['/admin']);
+          }, 800);
         },
-        error: (err) => {
-          console.error('Erro no login:', err);
+        error: () => {
           this.isLoading = false;
           this.errorMessage = 'Usuário ou senha inválidos.';
-          alert(this.errorMessage);
+
+          console.log("Error no login!")
         }
       });
   }
+
+  
 }
