@@ -14,6 +14,33 @@
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
 }
 
+/* Desabilita hover effects quando lightbox está aberto */
+.property-card:has(.lightbox-overlay) {
+  transform: none !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+}
+
+.property-card:has(.lightbox-overlay):hover {
+  transform: none !important;
+}
+
+.property-card:has(.lightbox-overlay):hover .main-image {
+  transform: none !important;
+}
+
+/* Classe alternativa para browsers que não suportam :has() */
+.property-card.lightbox-active,
+.property-card.lightbox-active:hover {
+  transform: none !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  pointer-events: none;
+}
+
+.property-card.lightbox-active .main-image,
+.property-card.lightbox-active:hover .main-image {
+  transform: none !important;
+}
+
 .property-images {
   position: relative;
 }
@@ -284,7 +311,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.3s ease forwards;
+  opacity: 1;
 }
 
 @keyframes fadeIn {
@@ -294,6 +322,11 @@
   to {
     opacity: 1;
   }
+}
+
+/* Prevent re-animation on state changes */
+.lightbox-overlay * {
+  animation: none !important;
 }
 
 .lightbox-content {

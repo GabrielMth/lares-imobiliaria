@@ -34,11 +34,11 @@ export class PropertyFormComponent implements OnInit {
     type: 'casa',
     transactionType: 'venda',
     title: '',
-    price: 0,
-    area: 0,
-    bedrooms: 0,
-    bathrooms: 0,
-    parking: 0,
+    price: '',
+    area: '',
+    bedrooms: '',
+    bathrooms: '',
+    parking: '',
 
     // endereço
     cep: '',

@@ -64,6 +64,7 @@
           <select id="minPrice" (change)="onPriceRangeChange($event, 'min')" [(ngModel)]="minPrice">
             <option [value]="0">R$ 0</option>
             <option [value]="100000">R$ 100.000</option>
+            <option [value]="200000">R$ 200.000</option>
             <option [value]="300000">R$ 300.000</option>
             <option [value]="500000">R$ 500.000</option>
             <option [value]="1000000">R$ 1.000.000</option>
@@ -73,6 +74,8 @@
         <div class="filter-group">
           <label for="maxPrice">Preço Máx:</label>
           <select id="maxPrice" (change)="onPriceRangeChange($event, 'max')" [(ngModel)]="maxPrice">
+            <option [value]="200000">R$ 200.000</option>
+            <option [value]="300000">R$ 300.000</option>
             <option [value]="500000">R$ 500.000</option>
             <option [value]="1000000">R$ 1.000.000</option>
             <option [value]="2000000">R$ 2.000.000</option>
@@ -80,6 +83,10 @@
             <option [value]="10000000">Sem limite</option>
           </select>
         </div>
+
+        <button class="filter-clean-btn" (click)="resetFilters()">
+          Limpar Filtros
+        </button>
       </div>
     </div>
 

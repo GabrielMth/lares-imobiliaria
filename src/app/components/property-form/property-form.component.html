@@ -198,7 +198,7 @@
 
       <!-- Descrição -->
       <div class="form-group full-width">
-        <label for="description">Descrição *</label>
+        <label for="description">Descrição (máx. 500 caracteres)*</label>
         <textarea
           id="description"
           name="description"
@@ -268,9 +268,9 @@
             </div>
 
             <div class="preview-info">
-              <div class="name">{{ selectedFiles[i]?.name }}</div>
+              <div class="name">{{ selectedFiles[i].name }}</div>
               <div class="size">
-                {{ formatFileSize(selectedFiles[i]?.size || 0) }}
+                {{ formatFileSize(selectedFiles[i].size || 0) }}
               </div>
             </div>
           </div>

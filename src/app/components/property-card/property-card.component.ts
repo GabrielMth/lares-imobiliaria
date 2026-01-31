@@ -37,6 +37,10 @@ export class PropertyCardComponent {
     this.currentImageIndex = index;
   }
 
+  setLightboxImage(index: number) {
+    this.lightboxImageIndex = index;
+  }
+
   openLightbox(index: number) {
     this.lightboxImageIndex = index;
     this.showLightbox = true;
@@ -67,6 +71,11 @@ export class PropertyCardComponent {
 
   formatPrice(price: number): string {
     return price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  }
+
+  // TrackBy function para evitar re-renderizações desnecessárias
+  trackByIndex(index: number): number {
+    return index;
   }
 
   sendWhatsApp() {

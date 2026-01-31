@@ -153,3 +153,31 @@
     gap: 1.5rem;
   }
 }
+
+.filter-clean-btn {
+  padding: 0.875rem 1.75rem;
+  border: 2px solid var(--color-white);
+  background: rgba(68, 47, 20, 0.98);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-clean-btn:hover {
+  border-color: rgb(243, 143, 50);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+}
+
+.filter-clean-btn.active {
+  background: var(--color-accent);
+  color: var(--color-white);
+  border-color: var(--color-accent);
+}

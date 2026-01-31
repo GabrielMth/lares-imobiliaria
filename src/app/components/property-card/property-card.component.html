@@ -1,15 +1,15 @@
-<div class="property-card" *ngIf="property">
+<div class="property-card" *ngIf="property" [class.lightbox-active]="showLightbox">
   <div class="property-images">
     <div class="main-image-container" *ngIf="property.urlsFotos && property.urlsFotos.length > 0">
       <img [src]="'http://localhost:8080/uploads/' + property.urlsFotos[currentImageIndex]" [alt]="property.titulo"
         class="main-image" (click)="openLightbox(currentImageIndex)">
 
-      <button class="nav-button prev" (click)="prevImage()" *ngIf="property.urlsFotos.length > 1">‹</button>
-      <button class="nav-button next" (click)="nextImage()" *ngIf="property.urlsFotos.length > 1">›</button>
+      <button class="nav-button prev" (click)="prevImage(); $event.stopPropagation()" *ngIf="property.urlsFotos.length > 1">‹</button>
+      <button class="nav-button next" (click)="nextImage(); $event.stopPropagation()" *ngIf="property.urlsFotos.length > 1">›</button>
 
       <div class="image-indicators" *ngIf="property.urlsFotos.length > 1">
         <span *ngFor="let img of property.urlsFotos; let i = index" class="indicator"
-          [class.active]="i === currentImageIndex" (click)="setImage(i)">
+          [class.active]="i === currentImageIndex" (click)="setImage(i); $event.stopPropagation()">
         </span>
       </div>
 
@@ -64,34 +64,33 @@
       📱 Mostrar Interesse
     </button>
   </div>
+</div>
 
-  <div class="lightbox-overlay" *ngIf="showLightbox" (click)="closeLightbox()">
-    <div class="lightbox-content" (click)="$event.stopPropagation()">
-      <button class="lightbox-close" (click)="closeLightbox()">✕</button>
+<!-- Lightbox movido para FORA do card para evitar conflitos de hover -->
+<div class="lightbox-overlay" *ngIf="showLightbox && property" (click)="closeLightbox()">
+  <div class="lightbox-content" (click)="$event.stopPropagation()">
+    <button class="lightbox-close" (click)="closeLightbox()">✕</button>
 
-      <button class="lightbox-nav prev" (click)="prevLightboxImage()"
-        *ngIf="property.urlsFotos && property.urlsFotos.length > 1">‹</button>
+    <button class="lightbox-nav prev" (click)="prevLightboxImage(); $event.stopPropagation()"
+      *ngIf="property.urlsFotos && property.urlsFotos.length > 1">‹</button>
 
-      <div class="lightbox-image-container" *ngIf="property.urlsFotos">
-        <img [src]="'http://localhost:8080/uploads/' + property.urlsFotos[lightboxImageIndex]"
-          alt="{{ property.titulo }}" class="card-img" (click)="$event.stopPropagation()"> <!-- ⚡ adiciona aqui -->
+    <div class="lightbox-image-container" *ngIf="property.urlsFotos">
+      <img [src]="'http://localhost:8080/uploads/' + property.urlsFotos[lightboxImageIndex]"
+        alt="{{ property.titulo }}" class="lightbox-image" (click)="$event.stopPropagation()">
 
-        <div class="lightbox-info" (click)="$event.stopPropagation()"> <!-- ⚡ e aqui -->
-          <h4>{{ property.titulo }}</h4>
-          <p>{{ lightboxImageIndex + 1 }} / {{ property.urlsFotos.length }}</p>
-        </div>
-      </div>
-
-      <button class="lightbox-nav next" (click)="nextLightboxImage()"
-        *ngIf="property.urlsFotos && property.urlsFotos.length > 1">›</button>
-
-      <div class="lightbox-thumbnails" *ngIf="property.urlsFotos">
-        <img *ngFor="let img of property.urlsFotos; let i = index" [src]="'http://localhost:8080/uploads/' + img"
-          [alt]="property.titulo + ' - ' + (i + 1)" class="lightbox-thumbnail" [class.active]="i === lightboxImageIndex"
-          (click)="lightboxImageIndex = i; $event.stopPropagation()"> <!-- ⚡ aqui também -->
+      <div class="lightbox-info" (click)="$event.stopPropagation()">
+        <h4>{{ property.titulo }}</h4>
+        <p>{{ lightboxImageIndex + 1 }} / {{ property.urlsFotos.length }}</p>
       </div>
     </div>
+
+    <button class="lightbox-nav next" (click)="nextLightboxImage(); $event.stopPropagation()"
+      *ngIf="property.urlsFotos && property.urlsFotos.length > 1">›</button>
+
+    <div class="lightbox-thumbnails" *ngIf="property.urlsFotos">
+      <img *ngFor="let img of property.urlsFotos; let i = index; trackBy: trackByIndex" [src]="'http://localhost:8080/uploads/' + img"
+        [alt]="property.titulo + ' - ' + (i + 1)" class="lightbox-thumbnail" [class.active]="i === lightboxImageIndex"
+        (click)="setLightboxImage(i); $event.stopPropagation()">
+    </div>
   </div>
-
-
 </div>
