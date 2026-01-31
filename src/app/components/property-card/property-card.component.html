@@ -74,9 +74,9 @@
 
       <div class="lightbox-image-container" *ngIf="property.urlsFotos">
         <img [src]="'http://localhost:8080/uploads/' + property.urlsFotos[lightboxImageIndex]"
-          alt="{{ property.titulo }}" class="card-img">
+          alt="{{ property.titulo }}" class="card-img" (click)="$event.stopPropagation()"> <!-- ⚡ adiciona aqui -->
 
-        <div class="lightbox-info">
+        <div class="lightbox-info" (click)="$event.stopPropagation()"> <!-- ⚡ e aqui -->
           <h4>{{ property.titulo }}</h4>
           <p>{{ lightboxImageIndex + 1 }} / {{ property.urlsFotos.length }}</p>
         </div>
@@ -88,8 +88,10 @@
       <div class="lightbox-thumbnails" *ngIf="property.urlsFotos">
         <img *ngFor="let img of property.urlsFotos; let i = index" [src]="'http://localhost:8080/uploads/' + img"
           [alt]="property.titulo + ' - ' + (i + 1)" class="lightbox-thumbnail" [class.active]="i === lightboxImageIndex"
-          (click)="lightboxImageIndex = i">
+          (click)="lightboxImageIndex = i; $event.stopPropagation()"> <!-- ⚡ aqui também -->
       </div>
     </div>
   </div>
+
+
 </div>

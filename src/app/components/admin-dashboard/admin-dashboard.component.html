@@ -28,7 +28,7 @@
         <div class="stat-card">
           <div class="stat-icon">🏘️</div>
           <div class="stat-info">
-            <h3>{{ properties.length }}</h3>
+            <h3>{{ getTotalImoveis() }}</h3>
             <p>Total de Imóveis</p>
           </div>
         </div>
@@ -36,7 +36,7 @@
         <div class="stat-card">
           <div class="stat-icon">🏡</div>
           <div class="stat-info">
-           <h3>{{ totalCasas }}</h3>
+            <h3>{{ totalCasas }}</h3>
             <p>Casas</p>
           </div>
         </div>
@@ -44,26 +44,96 @@
         <div class="stat-card">
           <div class="stat-icon">🏢</div>
           <div class="stat-info">
-           <h3>{{ totalApartamentos }}</h3>
+            <h3>{{ totalApartamentos }}</h3>
             <p>Apartamentos</p>
           </div>
         </div>
 
         <div class="stat-card">
-          <div class="stat-icon">🌳</div>
+          <div class="stat-icon">🌱</div>
           <div class="stat-info">
             <h3>{{ totalTerrenos }}</h3>
             <p>Terrenos</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🏡</div>
+          <div class="stat-info">
+            <h3>{{ totalChacaras }}</h3>
+            <p>Chácaras</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🏭</div>
+          <div class="stat-info">
+            <h3>{{ totalBarracao }}</h3>
+            <p>Barracões</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🌄</div>
+          <div class="stat-info">
+            <h3>{{ totalSitio }}</h3>
+            <p>Sítios</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+
+
   <!-- Properties List -->
   <div class="properties-section">
     <div class="container">
       <h2 class="section-title">Imóveis Cadastrados</h2>
+
+      <!-- Search & Filters -->
+      <div class="search-section">
+        <div class="search-grid">
+
+          <div class="search-field">
+            <label>Nome do imóvel</label>
+            <input type="text" placeholder="Ex: Casa no centro" [(ngModel)]="filters.nome">
+          </div>
+
+          <div class="search-field">
+            <label>Tipo</label>
+            <select [(ngModel)]="filters.tipoImovel">
+              <option value="">Todos</option>
+              <option value="CASA">Casa</option>
+              <option value="APARTAMENTO">Apartamento</option>
+              <option value="TERRENO">Terreno</option>
+              <option value="CHACARA">Chácara</option>
+              <option value="SITIO">Sítio</option>
+              <option value="BARRACAO">Barracão</option>
+            </select>
+          </div>
+
+          <div class="search-field">
+            <label>Venda / Aluguel</label>
+            <select [(ngModel)]="filters.status">
+              <option value="">Todos</option>
+              <option value="VENDA">Venda</option>
+              <option value="ALUGUEL">Aluguel</option>
+            </select>
+          </div>
+
+          <div class="search-actions">
+            <button class="btn btn-primary" (click)="buscar()">
+              🔍 Buscar
+            </button>
+
+            <button class="btn btn-danger" (click)="limparFiltros()">
+              ✖ Limpar Filtros
+            </button>
+          </div>
+
+        </div>
+      </div>
 
       <div class="properties-table-container">
         <table class="properties-table">
@@ -72,7 +142,7 @@
               <th>Foto</th>
               <th>Título</th>
               <th>Tipo</th>
-              <th>Status</th>
+              <th>Venda/Aluguel</th>
               <th>Preço</th>
               <th>Área</th>
               <th>Localização</th>
@@ -82,12 +152,10 @@
 
           <tbody>
             <tr *ngFor="let property of properties">
+
               <!-- Foto -->
               <td>
-                <img
-                  [src]="property.urlsFotos?.[0] || '/assets/images/sem-imagem.jpg'"
-                  [alt]="property.titulo"
-                  class="property-thumbnail">
+                <img [src]="getPhotoUrl(property)" [alt]="property.titulo" class="property-thumbnail">
               </td>
 
               <!-- Título -->
@@ -123,17 +191,14 @@
               <!-- Localização -->
               <td>
                 <div class="location-cell">
-                  <span>{{ property.endereco.logradouro }}, {{ property.endereco.numero }}</span>
-                  <small>{{ property.endereco.bairro }} - {{ property.endereco.cidade }}</small>
+                  <span>{{ property.endereco?.logradouro }}, {{ property.endereco?.numero }}</span>
+                  <small>{{ property.endereco?.bairro }} - {{ property.endereco?.cidade }}</small>
                 </div>
               </td>
 
               <!-- Ações -->
               <td>
                 <div class="action-buttons">
-                  <button class="btn-icon btn-edit" (click)="openEditForm(property)" title="Editar">
-                    ✏️
-                  </button>
                   <button class="btn-icon btn-delete" (click)="confirmDelete(property)" title="Excluir">
                     🗑️
                   </button>
@@ -142,7 +207,17 @@
             </tr>
           </tbody>
         </table>
+        <div class="pagination" *ngIf="totalPages > 1">
+          <button class="btn-page" [disabled]="page === 0" (click)="changePage(page - 1)">
+            ◀
+          </button>
 
+          <span>Página {{ page + 1 }} de {{ totalPages }}</span>
+
+          <button class="btn-page" [disabled]="page + 1 >= totalPages" (click)="changePage(page + 1)">
+            ▶
+          </button>
+        </div>
         <div class="empty-state" *ngIf="properties.length === 0">
           <div class="empty-icon">📭</div>
           <h3>Nenhum imóvel cadastrado</h3>
@@ -157,10 +232,7 @@
     <div class="modal-content" (click)="$event.stopPropagation()">
       <button class="modal-close" (click)="closeForm()">✕</button>
 
-      <app-property-form
-        [property]="editingProperty"
-        (propertySaved)="onPropertySaved()"
-        (formCancelled)="closeForm()">
+      <app-property-form [property]="editingProperty" (propertySaved)="onPropertySaved()" (formCancelled)="closeForm()">
       </app-property-form>
     </div>
   </div>

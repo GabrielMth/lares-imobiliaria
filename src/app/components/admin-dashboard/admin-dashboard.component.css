@@ -299,6 +299,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -380,8 +381,8 @@
 /* Buttons */
 .btn-outline {
   background: transparent;
-  color: white;
-  border: 2px solid white;
+  color: rgb(255, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
   padding: 0.875rem 2rem;
   border-radius: 8px;
   font-weight: 700;
@@ -394,7 +395,7 @@
 }
 
 .btn-outline:hover {
-  background: white;
+  background: rgb(242, 245, 47);
   color: var(--color-primary);
 }
 
@@ -443,4 +444,58 @@
   .modal-content {
     max-height: 95vh;
   }
+}
+
+
+
+
+.search-section {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.search-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  align-items: end;
+}
+
+.search-field label {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.search-field input,
+.search-field select {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.search-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn-page {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
 }
