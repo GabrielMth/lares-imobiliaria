@@ -2,43 +2,62 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PropertyCardComponent } from '../property-card/property-card.component';
-import { Property, TipoImovel, StatusImovel } from '../../models/property.model';
+import { PaginationComponent } from '../pagination/pagination.component';
 import { PropertyService } from '../../services/property-service';
+import { Property } from '../../models/property.model';
 
 @Component({
   selector: 'app-properties-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, PropertyCardComponent],
+  imports: [CommonModule, FormsModule, PropertyCardComponent, PaginationComponent],
   templateUrl: './properties-list.component.html',
   styleUrl: './properties-list.component.css'
 })
 export class PropertiesListComponent implements OnInit {
   properties: Property[] = [];
   filteredProperties: Property[] = [];
-  
+
+  // Paginação
+  currentPage: number = 0;
+  pageSize: number = 12;
+  totalPages: number = 0;
+  totalElements: number = 0;
+
   // Filtros
-  selectedType: string = 'todos'; // Vai mapear para TipoImovel
-  selectedTransaction: string = 'todos'; // Vai mapear para StatusImovel
+  selectedType: string = 'todos';
+  selectedTransaction: string = 'todos';
   selectedBedrooms: string = 'todos';
   minPrice: number = 0;
   maxPrice: number = 10000000;
-  
-  isLoading = true; // Para mostrar um "carregando..."
+
+  isLoading = true;
 
   constructor(private propertyService: PropertyService) {}
 
   ngOnInit() {
-    this.loadProperties();
+    this.loadProperties(0);
   }
 
-  loadProperties() {
+  // -----------------------------
+  // Busca paginada + filtrada
+  // -----------------------------
+  loadProperties(page: number = 0) {
     this.isLoading = true;
-    // Aqui buscamos a primeira página (você pode melhorar a paginação depois)
-    this.propertyService.buscar({}).subscribe({
-      next: (page) => {
-        this.properties = page.content;
-        this.filteredProperties = this.properties;
+    this.currentPage = page;
+
+    const filtros = this.buildFilters();
+
+    this.propertyService.buscar(filtros, page, this.pageSize).subscribe({
+      next: (pageResponse) => {
+        this.properties = pageResponse.content;
+        this.filteredProperties = pageResponse.content; // ✅ aqui já vem filtrado do backend
+
+        this.totalPages = pageResponse.totalPages;
+        this.totalElements = pageResponse.totalElements;
+        this.currentPage = pageResponse.number;
+
         this.isLoading = false;
+        this.scrollToTop();
       },
       error: (err) => {
         console.error('Erro ao buscar imóveis', err);
@@ -47,56 +66,52 @@ export class PropertiesListComponent implements OnInit {
     });
   }
 
-  // --- Lógica de Filtro Local (Filtra o que já baixou) ---
-  
-  filterByType(type: string) {
-    this.selectedType = type;
-    this.applyFilters();
+  private buildFilters() {
+    return {
+      tipoImovel: this.selectedType !== 'todos' ? this.selectedType : undefined,
+      status: this.selectedTransaction !== 'todos' ? this.selectedTransaction : undefined,
+      minQuartos: this.selectedBedrooms !== 'todos' ? parseInt(this.selectedBedrooms, 10) : undefined,
+      valorMin: this.minPrice ?? undefined,
+      valorMax: this.maxPrice ?? undefined,
+    };
   }
 
-  applyFilters() {
-    let filtered = this.properties;
-    
-    // 1. Filtrar por Tipo (CASA, APARTAMENTO...)
-    if (this.selectedType !== 'todos') {
-      filtered = filtered.filter(p => p.tipoImovel === this.selectedType as TipoImovel);
-    }
-    
-    // 2. Filtrar por Status (VENDA, ALUGUEL...)
-    if (this.selectedTransaction !== 'todos') {
-      filtered = filtered.filter(p => p.status === this.selectedTransaction as StatusImovel);
-    }
-    
-    // 3. Filtrar por Quartos
-    if (this.selectedBedrooms !== 'todos') {
-      const bedroomCount = parseInt(this.selectedBedrooms);
-      filtered = filtered.filter(p => p.quartos && p.quartos >= bedroomCount);
-    }
-    
-    // 4. Filtrar por Valor
-    filtered = filtered.filter(p => p.valor >= this.minPrice && p.valor <= this.maxPrice);
-    
-    this.filteredProperties = filtered;
+  // -----------------------------
+  // Paginação
+  // -----------------------------
+  onPageChange(page: number) {
+    this.loadProperties(page);
   }
-  
+
+  // -----------------------------
+  // Filtros (sempre reset page 0)
+  // -----------------------------
+  private onAnyFilterChanged() {
+    this.loadProperties(0);
+  }
+
+  filterByType(type: string) {
+    this.selectedType = type;
+    this.onAnyFilterChanged();
+  }
+
   onTransactionChange(event: Event) {
     this.selectedTransaction = (event.target as HTMLSelectElement).value;
-    this.applyFilters();
+    this.onAnyFilterChanged();
   }
-  
+
   onBedroomsChange(event: Event) {
     this.selectedBedrooms = (event.target as HTMLSelectElement).value;
-    this.applyFilters();
+    this.onAnyFilterChanged();
   }
-  
+
   onPriceRangeChange(event: Event, type: 'min' | 'max') {
-    const value = parseInt((event.target as HTMLSelectElement).value);
-    if (type === 'min') {
-      this.minPrice = value;
-    } else {
-      this.maxPrice = value;
-    }
-    this.applyFilters();
+    const value = parseInt((event.target as HTMLSelectElement).value, 10);
+
+    if (type === 'min') this.minPrice = value;
+    else this.maxPrice = value;
+
+    this.onAnyFilterChanged();
   }
 
   resetFilters() {
@@ -105,6 +120,17 @@ export class PropertiesListComponent implements OnInit {
     this.selectedBedrooms = 'todos';
     this.minPrice = 0;
     this.maxPrice = 10000000;
-    this.applyFilters();
+
+    this.onAnyFilterChanged();
+  }
+
+  // -----------------------------
+  // UX
+  // -----------------------------
+  scrollToTop() {
+    const element = document.getElementById('properties');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 }

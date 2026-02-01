@@ -110,5 +110,15 @@
         Limpar Filtros
       </button>
     </div>
+
+    <!-- Componente de Paginação -->
+    <app-pagination
+      *ngIf="!isLoading && filteredProperties.length > 0"
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      [totalElements]="totalElements"
+      (pageChange)="onPageChange($event)"
+      data-testid="properties-pagination">
+    </app-pagination>
   </div>
 </section>

@@ -1,0 +1,59 @@
+<div class="pagination-container" *ngIf="totalPages > 0">
+  <div class="pagination-info">
+    <p>Página {{ currentPage + 1 }} de {{ totalPages }} | Total: {{ totalElements }} imóveis</p>
+  </div>
+  
+  <nav class="pagination" aria-label="Paginação">
+    <!-- Botão Primeira Página -->
+    <button 
+      class="pagination-btn" 
+      [disabled]="currentPage === 0"
+      (click)="goToFirstPage()"
+      aria-label="Primeira página"
+      data-testid="first-page-btn">
+      «
+    </button>
+    
+    <!-- Botão Anterior -->
+    <button 
+      class="pagination-btn" 
+      [disabled]="currentPage === 0"
+      (click)="previousPage()"
+      aria-label="Página anterior"
+      data-testid="previous-page-btn">
+      ‹
+    </button>
+    
+    <!-- Números das Páginas -->
+    <button
+      *ngFor="let page of pages"
+      class="pagination-btn"
+      [class.active]="page === currentPage"
+      [class.ellipsis]="page === -1"
+      [disabled]="page === -1"
+      (click)="onPageChange(page)"
+      [attr.data-testid]="'page-' + (page + 1) + '-btn'">
+      {{ page === -1 ? '...' : (page + 1) }}
+    </button>
+    
+    <!-- Botão Próximo -->
+    <button 
+      class="pagination-btn" 
+      [disabled]="currentPage === totalPages - 1"
+      (click)="nextPage()"
+      aria-label="Próxima página"
+      data-testid="next-page-btn">
+      ›
+    </button>
+    
+    <!-- Botão Última Página -->
+    <button 
+      class="pagination-btn" 
+      [disabled]="currentPage === totalPages - 1"
+      (click)="goToLastPage()"
+      aria-label="Última página"
+      data-testid="last-page-btn">
+      »
+    </button>
+  </nav>
+</div>
