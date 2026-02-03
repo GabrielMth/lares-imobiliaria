@@ -28,11 +28,11 @@ export class PropertiesListComponent implements OnInit {
   selectedTransaction: string = 'todos';
   selectedBedrooms: string = 'todos';
   minPrice: number = 0;
-  maxPrice: number = 10000000;
+  maxPrice: number = 1000000000;
 
   isLoading = true;
 
-  constructor(private propertyService: PropertyService) {}
+  constructor(private propertyService: PropertyService) { }
 
   ngOnInit() {
     this.loadProperties(0);
@@ -70,11 +70,14 @@ export class PropertiesListComponent implements OnInit {
     return {
       tipoImovel: this.selectedType !== 'todos' ? this.selectedType : undefined,
       status: this.selectedTransaction !== 'todos' ? this.selectedTransaction : undefined,
-      minQuartos: this.selectedBedrooms !== 'todos' ? parseInt(this.selectedBedrooms, 10) : undefined,
-      valorMin: this.minPrice ?? undefined,
-      valorMax: this.maxPrice ?? undefined,
+      quartos: this.selectedBedrooms !== 'todos'
+        ? parseInt(this.selectedBedrooms, 10)
+        : undefined,
+      valorMin: this.minPrice > 0 ? this.minPrice : undefined,
+      valorMax: this.maxPrice < 1000000000 ? this.maxPrice : undefined,
     };
   }
+
 
   // -----------------------------
   // Paginação
@@ -119,10 +122,10 @@ export class PropertiesListComponent implements OnInit {
     this.selectedTransaction = 'todos';
     this.selectedBedrooms = 'todos';
     this.minPrice = 0;
-    this.maxPrice = 10000000;
-
-    this.onAnyFilterChanged();
+    this.maxPrice = 1000000000;
+    this.loadProperties(0);
   }
+
 
   // -----------------------------
   // UX

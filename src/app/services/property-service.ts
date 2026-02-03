@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Property, PropertyRequest, Page, PropertyResponse } from '../models/property.model';
+import { environment } from '../../environments/enviroment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PropertyService {
 
-  private readonly API_URL = 'http://localhost:8080/imoveis';
+  private readonly API_URL = `${environment.apiUrl}/imoveis`;
 
   constructor(private http: HttpClient) { }
 
@@ -32,30 +33,25 @@ export class PropertyService {
 
   // 3. GET /imoveis (Com filtros e paginação)
   buscar(
-    filtros: {
-      quartos?: number,
-      vagas?: number,
-      bairro?: string,
-      valorMin?: number,
-      valorMax?: number
-    },
+    filtros: Record<string, any>,
     page: number = 0,
-    size: number = 10
+    size: number = 12
   ): Observable<Page<Property>> {
 
     let params = new HttpParams()
-      .set('page', page.toString())
-      .set('size', size.toString())
+      .set('page', String(page))
+      .set('size', String(size))
       .set('sort', 'id,desc');
 
-    if (filtros.quartos) params = params.set('quartos', filtros.quartos);
-    if (filtros.vagas) params = params.set('vagas', filtros.vagas);
-    if (filtros.bairro) params = params.set('bairro', filtros.bairro);
-    if (filtros.valorMin) params = params.set('valorMin', filtros.valorMin);
-    if (filtros.valorMax) params = params.set('valorMax', filtros.valorMax);
+    Object.entries(filtros ?? {}).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        params = params.set(key, String(value));
+      }
+    });
 
     return this.http.get<Page<Property>>(this.API_URL, { params });
   }
+
 
   // 4. GET /imoveis/{id}
   buscarPorId(id: number): Observable<Property> {
