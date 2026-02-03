@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://sua-api.com',
+  apiUrl: 'https://api-barrios.vps7358.panel.icontainer.net',
 };

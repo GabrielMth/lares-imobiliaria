@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Property } from '../../models/property.model';
-
+import { environment } from '../../../environments/enviroment';
 
 @Component({
   selector: 'app-property-card',
@@ -14,31 +14,33 @@ export class PropertyCardComponent {
   @Input() property!: Property;
 
   currentImageIndex = 0;
-  showLightbox = false;
   lightboxImageIndex = 0;
+  showLightbox = false;
 
-  // Ajustado para usar 'urlsFotos'
-  nextImage() {
-    if (this.property.urlsFotos && this.property.urlsFotos.length) {
-      this.currentImageIndex = (this.currentImageIndex + 1) % this.property.urlsFotos.length;
-    }
+  // Base da API (produção / dev)
+  apiUrl = environment.apiUrl.replace(/\/$/, '');
+
+  /** Monta URL da imagem */
+  getImageUrl(fileName: string): string {
+    return `${this.apiUrl}/uploads/${fileName}`;
   }
 
-  // Ajustado para usar 'urlsFotos'
+  nextImage() {
+    if (!this.property.urlsFotos?.length) return;
+    this.currentImageIndex =
+      (this.currentImageIndex + 1) % this.property.urlsFotos.length;
+  }
+
   prevImage() {
-    if (this.property.urlsFotos && this.property.urlsFotos.length) {
-      this.currentImageIndex = this.currentImageIndex === 0
+    if (!this.property.urlsFotos?.length) return;
+    this.currentImageIndex =
+      this.currentImageIndex === 0
         ? this.property.urlsFotos.length - 1
         : this.currentImageIndex - 1;
-    }
   }
 
   setImage(index: number) {
     this.currentImageIndex = index;
-  }
-
-  setLightboxImage(index: number) {
-    this.lightboxImageIndex = index;
   }
 
   openLightbox(index: number) {
@@ -52,36 +54,41 @@ export class PropertyCardComponent {
     document.body.style.overflow = 'auto';
   }
 
-
-  // Ajustado para usar 'urlsFotos'
   nextLightboxImage() {
-    if (this.property.urlsFotos) {
-      this.lightboxImageIndex = (this.lightboxImageIndex + 1) % this.property.urlsFotos.length;
-    }
+    if (!this.property.urlsFotos?.length) return;
+    this.lightboxImageIndex =
+      (this.lightboxImageIndex + 1) % this.property.urlsFotos.length;
   }
 
-  // Ajustado para usar 'urlsFotos'
   prevLightboxImage() {
-    if (this.property.urlsFotos) {
-      this.lightboxImageIndex = this.lightboxImageIndex === 0
+    if (!this.property.urlsFotos?.length) return;
+    this.lightboxImageIndex =
+      this.lightboxImageIndex === 0
         ? this.property.urlsFotos.length - 1
         : this.lightboxImageIndex - 1;
-    }
   }
 
   formatPrice(price: number): string {
-    return price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    return price.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    });
   }
 
-  // TrackBy function para evitar re-renderizações desnecessárias
   trackByIndex(index: number): number {
     return index;
   }
 
   sendWhatsApp() {
-    // Ajustado para 'titulo' e 'valor'
     const message = `Olá! Tenho interesse no imóvel: ${this.property.titulo} - ${this.formatPrice(this.property.valor)}`;
-    const url = `https://wa.me/5518996312445?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+    window.open(
+      `https://wa.me/5518996312445?text=${encodeURIComponent(message)}`,
+      '_blank'
+    );
   }
+
+  get fotos(): string[] {
+  return this.property?.urlsFotos ?? [];
+}
+
 }

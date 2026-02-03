@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 import { Property } from '../../models/property.model';
 import { PropertyFormComponent } from '../../components/property-form/property-form.component';
+import { environment } from '../../../environments/enviroment';
+
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -35,6 +37,8 @@ export class AdminDashboardComponent implements OnInit {
   editingProperty: Property | null = null;
   showDeleteConfirm = false;
   propertyToDelete: Property | null = null;
+  apiUrl = environment.apiUrl;
+
 
   // Filtros
   filters = {
@@ -163,10 +167,17 @@ export class AdminDashboardComponent implements OnInit {
 
   /** ================= Fotos ================= */
   getPhotoUrl(property: Property, index: number = 0): string {
-    if (property.urlsFotos?.length) {
-      return `http://localhost:8080/uploads/${property.urlsFotos[index]}`;
+    const fotos = property.urlsFotos ?? [];
+    if (fotos.length > 0) {
+      return this.joinUrl(this.apiUrl, `/uploads/${fotos[index]}`);
     }
     return 'assets/images/sem-imagem.jpg';
+  }
+
+  private joinUrl(base: string, path: string): string {
+    const b = base.replace(/\/+$/, '');
+    const p = path.replace(/^\/+/, '');
+    return `${b}/${p}`;
   }
 
   getTotalImoveis(): number {
