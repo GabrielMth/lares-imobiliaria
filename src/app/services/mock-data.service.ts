@@ -14,7 +14,7 @@ export class MockDataService {
       phone: '+55 (18) 99631-2445',
       email: 'psvivianabarrios@gmail.com',
       photo: 'assets/images/agente-viviana.png',
-      instagram: 'https://instagram.com/viviana_barrios',
+      instagram: 'https://www.instagram.com/viviana_barrios_',
       linkedin: 'https://linkedin.com/in/viviana-barros',
       facebook: 'https://www.facebook.com/consultoravivianab/'
     },
