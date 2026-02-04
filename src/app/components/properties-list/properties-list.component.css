@@ -45,7 +45,7 @@
   border-color: var(--color-accent);
   color: var(--color-accent);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+  box-shadow: 0 4px 12px rgba(68, 47, 20, 0.98);
 }
 
 .filter-btn.active {

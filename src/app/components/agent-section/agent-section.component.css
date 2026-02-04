@@ -85,7 +85,7 @@
 }
 
 .agent-image-wrapper {
-  background: linear-gradient(135deg, var(--color-accent) 0%, #2980b9 100%);
+  background: linear-gradient(135deg, var(--color-accent) 0%, rgba(85, 58, 24, 0.98) 100%);
   padding: 2rem;
   display: flex;
   align-items: center;
@@ -283,25 +283,25 @@
     grid-template-columns: 1fr;
     gap: 0;
   }
-  
+
   .agent-image-wrapper {
     padding: 2rem 1.5rem;
   }
-  
+
   .agent-info {
     padding: 2rem 1.5rem;
   }
-  
+
   .agent-highlights {
     grid-template-columns: 1fr;
   }
-  
+
   .carousel-btn.prev {
     left: 5px;
     width: 45px;
     height: 45px;
   }
-  
+
   .carousel-btn.next {
     right: 5px;
     width: 45px;
@@ -313,23 +313,23 @@
   .agent-name {
     font-size: 1.75rem;
   }
-  
+
   .agent-role {
     font-size: 1rem;
   }
-  
+
   .agent-description {
     font-size: 0.95rem;
   }
-  
+
   .social-links {
     flex-direction: column;
   }
-  
+
   .social-link {
     justify-content: center;
   }
-  
+
   .carousel-btn {
     width: 40px;
     height: 40px;
@@ -338,38 +338,38 @@
     color: white;
     border: none;
   }
-  
+
   .carousel-btn:hover {
     background: var(--color-accent);
   }
-  
+
   .carousel-btn.prev {
     left: 10px;
     top: 200px;
   }
-  
+
   .carousel-btn.next {
     right: 10px;
     top: 200px;
   }
-  
+
   .agent-image-wrapper {
     padding: 2rem 1rem;
   }
-  
+
   .agent-image-container {
     max-width: 280px;
   }
-  
+
   .agent-highlights {
     padding: 1.5rem;
   }
-  
+
   .highlight {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .agent-contact {
     padding: 1.5rem;
   }

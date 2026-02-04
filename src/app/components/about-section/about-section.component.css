@@ -79,7 +79,7 @@
 }
 
 .cta-box {
-  background: linear-gradient(135deg, var(--color-accent) 0%, #2980b9 100%);
+  background: linear-gradient(135deg, var(--color-accent) 0%, rgba(75, 53, 24, 0.98) 100%);
   color: var(--color-white);
   padding: 2.5rem;
   border-radius: 16px;
@@ -169,11 +169,11 @@
   .cta-box {
     padding: 2rem 1.5rem;
   }
-  
+
   .cta-box h3 {
     font-size: 1.5rem;
   }
-  
+
   .cta-box p {
     font-size: 1rem;
   }
