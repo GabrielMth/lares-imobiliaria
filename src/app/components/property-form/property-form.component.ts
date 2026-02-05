@@ -26,8 +26,8 @@ export class PropertyFormComponent implements OnInit {
   previewUrls: string[] = [];
   mainPhotoIndex = 0;
 
-  maxFotos = 12;
-  maxSizeMb = 5; // ajuste se quiser
+  maxFotos = 24;
+  maxSizeMb = 100;
   photoError = '';
 
   formData: any = {
@@ -131,7 +131,7 @@ export class PropertyFormComponent implements OnInit {
       titulo: this.formData.title,
       descricao: this.formData.description,
       tipoImovel: this.mapTipoImovel(this.formData.type),
-      status: this.mapStatus(this.formData.transactionType), 
+      status: this.mapStatus(this.formData.transactionType),
       valor: Number(this.formData.price),
       areaTotal: Number(this.formData.area),
       quartos: Number(this.formData.bedrooms),
