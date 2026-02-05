@@ -30,9 +30,12 @@
       </span>
 
       <span class="featured-badge" *ngIf="property.featured">Destaque</span>
+
+      <span class="reference-badge" *ngIf="property.id">
+        🏷️ {{ property.id }}
+      </span>
     </div>
 
-    <!-- MINIATURAS -->
     <!-- MINIATURAS -->
     <div class="thumbnail-container" *ngIf="fotos.length > 1">
       <img *ngFor="let img of fotos.slice(0, 4); let i = index" class="thumbnail" [src]="getImageUrl(img)"

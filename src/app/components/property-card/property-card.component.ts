@@ -79,16 +79,28 @@ export class PropertyCardComponent {
     return index;
   }
 
-  sendWhatsApp() {
-    const message = `Olá! Tenho interesse no imóvel: ${this.property.titulo} - ${this.formatPrice(this.property.valor)}`;
-    window.open(
-      `https://wa.me/5518996312445?text=${encodeURIComponent(message)}`,
-      '_blank'
-    );
+  sendWhatsApp(): void {
+    if (!this.property) return;
+
+    const phone = '5518996312445';
+    const ref = this.property.id ?? 'N/A';
+    const titulo = this.property.titulo ?? 'Imóvel';
+    const status = this.property.status ? this.property.status.toLowerCase() : '';
+    const valor = this.formatPrice?.(this.property.valor) ?? '';
+
+    const msg =
+      `Olá! Tenho interesse no imóvel.\n` +
+      ` Referência: ${ref}\n` +
+      ` ${titulo}\n` +
+      (status ? ` Tipo: ${status}\n` : '') +
+      (valor ? `$ Valor: ${valor}\n` : '');
+
+    const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+    window.open(waUrl, '_blank');
   }
 
   get fotos(): string[] {
-  return this.property?.urlsFotos ?? [];
-}
+    return this.property?.urlsFotos ?? [];
+  }
 
 }

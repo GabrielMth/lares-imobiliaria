@@ -127,7 +127,7 @@
   position: absolute;
   top: 15px;
   left: 15px;
-  background: var(--color-accent);
+  background: rgb(36, 140, 189);
   color: var(--color-white);
   padding: 0.6rem 1.2rem;
   border-radius: 20px;
@@ -205,7 +205,7 @@
 
 .thumbnail.active {
   opacity: 1;
-  border-color: var(--color-accent);
+  border-color: rgb(36, 140, 189);
 }
 
 .property-content {
@@ -235,7 +235,7 @@
 .property-price {
   font-size: 1.75rem;
   font-weight: 900;
-  color: var(--color-accent);
+  color: #176396;
   margin-bottom: 1rem;
 }
 
@@ -281,19 +281,19 @@
   .main-image-container {
     height: 250px;
   }
-  
+
   .property-title {
     font-size: 1.25rem;
   }
-  
+
   .property-price {
     font-size: 1.5rem;
   }
-  
+
   .thumbnail-container {
     grid-template-columns: repeat(4, 1fr);
   }
-  
+
   .thumbnail {
     height: 50px;
   }
@@ -473,7 +473,7 @@
 
 .lightbox-thumbnail.active {
   opacity: 1;
-  border-color: var(--color-accent);
+  border-color: rgb(36, 140, 189);
 }
 
 @media (max-width: 768px) {
@@ -481,7 +481,7 @@
     width: 95%;
     height: 95vh;
   }
-  
+
   .lightbox-close {
     top: 10px;
     right: 10px;
@@ -489,40 +489,64 @@
     height: 40px;
     font-size: 1.5rem;
   }
-  
+
   .lightbox-nav {
     width: 45px;
     height: 45px;
     font-size: 2rem;
   }
-  
+
   .lightbox-nav.prev {
     left: 10px;
   }
-  
+
   .lightbox-nav.next {
     right: 10px;
   }
-  
+
   .lightbox-image-container {
     height: calc(100% - 120px);
   }
-  
+
   .lightbox-info h4 {
     font-size: 1rem;
   }
-  
+
   .lightbox-info p {
     font-size: 0.85rem;
   }
-  
+
   .lightbox-thumbnails {
     gap: 8px;
     padding: 10px;
   }
-  
+
   .lightbox-thumbnail {
     width: 60px;
     height: 45px;
   }
 }
+
+
+.reference-badge {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+
+  padding: 4px 6px;
+  border-radius: 4px;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  z-index: 3;
+}
+

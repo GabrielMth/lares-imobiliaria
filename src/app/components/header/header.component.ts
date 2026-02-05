@@ -11,8 +11,23 @@ import { RouterModule } from '@angular/router';
 })
 export class HeaderComponent {
   menuOpen = false;
-  
+
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
   }
+
+  scrollTo(id: string) {
+  this.menuOpen = false; // fecha o menu
+
+  // espera o menu fechar/render atualizar antes de rolar
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    el.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }, 0);
+}
 }

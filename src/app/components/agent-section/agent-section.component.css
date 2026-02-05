@@ -136,7 +136,7 @@
 
 .agent-role {
   font-size: 1.1rem;
-  color: var(--color-accent);
+  color: #1877f2;
   font-weight: 600;
   margin-bottom: 2rem;
 }
@@ -225,7 +225,7 @@
 }
 
 .contact-item:hover {
-  background: var(--color-accent);
+  background: #1877f2;
   color: var(--color-white);
   transform: translateX(5px);
 }

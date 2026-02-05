@@ -198,7 +198,7 @@
 .price-cell {
   font-weight: 700;
   font-size: 1.1rem;
-  color: var(--color-accent);
+  color: green;
 }
 
 .location-cell {
@@ -380,8 +380,8 @@
 
 /* Buttons */
 .btn-outline {
-  background: transparent;
-  color: rgb(255, 255, 255);
+  background: #1f2937; /* cinza escuro elegante */
+  color: white;
   border: 2px solid rgb(255, 255, 255);
   padding: 0.875rem 2rem;
   border-radius: 8px;
@@ -498,4 +498,9 @@
   border: 1px solid #ddd;
   background: white;
   cursor: pointer;
+}
+
+.btn-add {
+  background: #2980b9;
+  color: white;
 }
