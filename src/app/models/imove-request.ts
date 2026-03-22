@@ -27,8 +27,10 @@ export interface ImovelRequestDto {
   areaTotal?: number;
   areaConstruida?: number;
   quartos?: number;
+  suites?: number;
   banheiros?: number;
   vagasGaragem?: number;
   enderecos: EnderecosRequestDtos;
   movelActive: boolean;
+  isComercial: boolean;
 }

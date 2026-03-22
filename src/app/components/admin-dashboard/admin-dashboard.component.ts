@@ -31,6 +31,7 @@ export class AdminDashboardComponent implements OnInit {
   totalChacaras = 0;
   totalBarracao = 0;
   totalSitio = 0;
+  totalSobrado = 0;
 
   // Modais
   showForm = false;
@@ -65,6 +66,7 @@ export class AdminDashboardComponent implements OnInit {
         this.totalChacaras = totais['CHACARA'] || 0;
         this.totalBarracao = totais['BARRACAO'] || 0;
         this.totalSitio = totais['SITIO'] || 0;
+        this.totalSobrado = totais['SOBRADO'] || 0;
       },
       error: (err) => console.error('Erro ao buscar totais:', err)
     });

@@ -3,8 +3,8 @@
 
     <!-- IMAGEM PRINCIPAL -->
     <div class="main-image-container" *ngIf="property.urlsFotos?.length">
-      <img class="main-image" [src]="getImageUrl(property.urlsFotos[currentImageIndex])" [alt]="property.titulo"
-        (click)="openLightbox(currentImageIndex)" />
+      <img class="main-image" [src]="getImageUrl(property.urlsFotos[currentImageIndex], 'medium')"
+        [alt]="property.titulo" loading="lazy" (click)="openLightbox(currentImageIndex)" />
 
       <button class="nav-button prev" *ngIf="property.urlsFotos.length > 1"
         (click)="prevImage(); $event.stopPropagation()">
@@ -38,8 +38,9 @@
 
     <!-- MINIATURAS -->
     <div class="thumbnail-container" *ngIf="fotos.length > 1">
-      <img *ngFor="let img of fotos.slice(0, 4); let i = index" class="thumbnail" [src]="getImageUrl(img)"
-        [alt]="property.titulo + ' - ' + (i + 1)" [class.active]="i === currentImageIndex" (click)="setImage(i)" />
+      <img *ngFor="let img of fotos.slice(0, 4); let i = index" class="thumbnail" [src]="getImageUrl(img, 'thumb')"
+        [alt]="property.titulo + ' - ' + (i + 1)" loading="lazy" [class.active]="i === currentImageIndex"
+        (click)="setImage(i)" />
     </div>
 
   </div>
@@ -49,10 +50,8 @@
     <h3 class="property-title">{{ property.titulo }}</h3>
 
     <p class="property-location" *ngIf="property.endereco">
-      📍 {{ property.endereco.logradouro }},
-      {{ property.endereco.numero }} -
-      {{ property.endereco.bairro }},
-      {{ property.endereco.cidade }}
+      📍 Bairro: {{ property.endereco.bairro }} -
+      {{ property.cidade | titlecase}}
     </p>
 
     <p class="property-location" *ngIf="!property.endereco">
@@ -63,9 +62,15 @@
 
     <div class="property-features">
       <span *ngIf="property.quartos">🛏️ {{ property.quartos }} Quartos</span>
+      <span *ngIf="property.suites">
+        🛌 {{ property.suites }} Suítes
+      </span>
       <span *ngIf="property.banheiros">🚿 {{ property.banheiros }} Banheiros</span>
       <span *ngIf="property.vagasGaragem">🚗 {{ property.vagasGaragem }} Vagas</span>
       <span>📐 {{ property.areaTotal }}m²</span>
+      <span *ngIf="property.areaConstruida">
+        🏗️ {{ property.areaConstruida }} m² construídos
+      </span>
     </div>
 
     <p class="property-description">{{ property.descricao }}</p>
@@ -86,7 +91,8 @@
       ‹
     </button>
 
-    <img class="lightbox-image" [src]="getImageUrl(property.urlsFotos[lightboxImageIndex])" [alt]="property.titulo" />
+    <img class="lightbox-image" [src]="getImageUrl(property.urlsFotos[lightboxImageIndex], 'full')"
+      [alt]="property.titulo" />
 
     <button class="lightbox-nav next" *ngIf="property.urlsFotos.length > 1"
       (click)="nextLightboxImage(); $event.stopPropagation()">
@@ -95,7 +101,7 @@
 
     <div class="lightbox-thumbnails">
       <img *ngFor="let img of property.urlsFotos; let i = index; trackBy: trackByIndex" class="lightbox-thumbnail"
-        [src]="getImageUrl(img)" [class.active]="i === lightboxImageIndex"
+        [src]="getImageUrl(img, 'thumb')" loading="lazy" [class.active]="i === lightboxImageIndex"
         (click)="lightboxImageIndex = i; $event.stopPropagation()" />
     </div>
   </div>

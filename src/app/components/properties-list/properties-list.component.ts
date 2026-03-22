@@ -22,6 +22,7 @@ export class PropertiesListComponent implements OnInit {
   pageSize: number = 12;
   totalPages: number = 0;
   totalElements: number = 0;
+  onlyCommercial: boolean = false;
 
   // Filtros
   selectedType: string = 'todos';
@@ -75,6 +76,7 @@ export class PropertiesListComponent implements OnInit {
         : undefined,
       valorMin: this.minPrice > 0 ? this.minPrice : undefined,
       valorMax: this.maxPrice < 1000000000 ? this.maxPrice : undefined,
+      isComercial: this.onlyCommercial ? true : undefined,
     };
   }
 
@@ -95,8 +97,10 @@ export class PropertiesListComponent implements OnInit {
 
   filterByType(type: string) {
     this.selectedType = type;
+    this.onlyCommercial = false;
     this.onAnyFilterChanged();
   }
+
 
   onTransactionChange(event: Event) {
     this.selectedTransaction = (event.target as HTMLSelectElement).value;
@@ -123,8 +127,10 @@ export class PropertiesListComponent implements OnInit {
     this.selectedBedrooms = 'todos';
     this.minPrice = 0;
     this.maxPrice = 1000000000;
+    this.onlyCommercial = false; // ✅ importante
     this.loadProperties(0);
   }
+
 
 
   // -----------------------------
@@ -136,4 +142,13 @@ export class PropertiesListComponent implements OnInit {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
+
+
+  toggleCommercial() {
+    this.onlyCommercial = true;     // ✅ força comercial
+    this.selectedType = 'todos';    // ✅ limpa tipo
+    this.onAnyFilterChanged();
+  }
+
+
 }

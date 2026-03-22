@@ -85,7 +85,7 @@
 }
 
 .agent-image-wrapper {
-  background: linear-gradient(135deg, var(--color-accent) 0%, rgba(85, 58, 24, 0.98) 100%);
+  background: linear-gradient(135deg, rgb(52, 26, 0) 0%, rgba(85, 58, 24, 0.98) 100%);
   padding: 2rem;
   display: flex;
   align-items: center;

@@ -17,11 +17,13 @@ export interface Property {
   valor: number;
   tipoImovel: TipoImovel;
   status: StatusImovel;
+  cidade: string;
 
   areaTotal: number;
   areaConstruida: number;
 
   quartos: number;
+  suites?: number;
   banheiros: number;
   vagasGaragem: number;
 
@@ -30,6 +32,7 @@ export interface Property {
   urlsFotos: string[];
   featured?: boolean;
 }
+
 export interface Agent {
   id: number;
   name: string;

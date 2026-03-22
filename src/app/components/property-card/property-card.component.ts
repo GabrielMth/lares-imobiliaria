@@ -21,8 +21,12 @@ export class PropertyCardComponent {
   apiUrl = environment.apiUrl.replace(/\/$/, '');
 
   /** Monta URL da imagem */
-  getImageUrl(fileName: string): string {
-    return `${this.apiUrl}/uploads/${fileName}`;
+  getImageUrl(fileName: string, size: 'thumb' | 'medium' | 'full' = 'full'): string {
+    if (!fileName) return '';
+    const prefix = size === 'thumb' ? 'thumb_'
+      : size === 'medium' ? 'medium_'
+        : '';
+    return `${this.apiUrl}/uploads/${prefix}${fileName}`;
   }
 
   nextImage() {

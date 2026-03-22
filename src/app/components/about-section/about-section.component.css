@@ -79,7 +79,7 @@
 }
 
 .cta-box {
-  background: linear-gradient(135deg, var(--color-accent) 0%, rgba(75, 53, 24, 0.98) 100%);
+  background: linear-gradient(135deg, rgb(52, 26, 0) 0%, rgb(52, 26, 0) 100%);
   color: var(--color-white);
   padding: 2.5rem;
   border-radius: 16px;

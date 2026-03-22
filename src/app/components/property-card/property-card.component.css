@@ -127,7 +127,7 @@
   position: absolute;
   top: 15px;
   left: 15px;
-  background: rgb(36, 140, 189);
+  background: #b07a3a;
   color: var(--color-white);
   padding: 0.6rem 1.2rem;
   border-radius: 20px;
@@ -265,11 +265,23 @@
   font-size: 0.95rem;
   line-height: 1.6;
   margin-bottom: 1.5rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  flex: 1;
+
+  max-height: 120px;   /* ajuste: 100–160 */
+  overflow-y: auto;    /* ✅ scroll */
+  overflow-x: hidden;
+  padding-right: 6px;  /* espaço pro scrollbar */
+}
+
+/* scrollbar discreto (Chrome/Edge/Safari) */
+.property-description::-webkit-scrollbar {
+  width: 6px;
+}
+.property-description::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.25);
+  border-radius: 10px;
+}
+.property-description::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .w-full {

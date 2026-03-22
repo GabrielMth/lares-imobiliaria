@@ -36,6 +36,15 @@
         <button class="filter-btn" [class.active]="selectedType === 'SITIO'" (click)="filterByType('SITIO')">
           🌾 Sítio
         </button>
+
+        <button class="filter-btn" [class.active]="selectedType === 'SOBRADO'" (click)="filterByType('SOBRADO')">
+          🏘️ Sobrado
+        </button>
+
+        <button class="filter-btn" [class.active]="onlyCommercial" (click)="toggleCommercial()">
+          🏪 Comercial
+        </button>
+
       </div>
 
       <div class="advanced-filters">
@@ -112,12 +121,8 @@
     </div>
 
     <!-- Componente de Paginação -->
-    <app-pagination
-      *ngIf="!isLoading && filteredProperties.length > 0"
-      [currentPage]="currentPage"
-      [totalPages]="totalPages"
-      [totalElements]="totalElements"
-      (pageChange)="onPageChange($event)"
+    <app-pagination *ngIf="!isLoading && filteredProperties.length > 0" [currentPage]="currentPage"
+      [totalPages]="totalPages" [totalElements]="totalElements" (pageChange)="onPageChange($event)"
       data-testid="properties-pagination">
     </app-pagination>
   </div>

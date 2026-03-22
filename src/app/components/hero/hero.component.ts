@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-hero',
@@ -17,20 +18,55 @@ export class HeroComponent implements OnInit, OnDestroy {
     'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1920'
   ];
   intervalId: any;
-  
+
+  // Totais por tipo
+  totalCasas = 0;
+  totalApartamentos = 0;
+  totalTerrenos = 0;
+  totalChacaras = 0;
+  totalBarracao = 0;
+  totalSitio = 0;
+  totalSobrado = 0;
+
+  // Total geral (Imóveis Disponíveis)
+  totalImoveisDisponiveis = 0;
+
+  constructor(private adminService: AdminService) { }
+
   ngOnInit() {
     this.startCarousel();
+    this.loadTotals();
   }
-  
+
   ngOnDestroy() {
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
   }
-  
+
   startCarousel() {
     this.intervalId = setInterval(() => {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
     }, 5000);
   }
+
+
+  loadTotals(): void {
+    this.adminService.getTotals().subscribe({
+      next: (totais) => {
+        this.totalCasas = totais['CASA'] || 0;
+        this.totalApartamentos = totais['APARTAMENTO'] || 0;
+        this.totalTerrenos = totais['TERRENO'] || 0;
+        this.totalChacaras = totais['CHACARA'] || 0;
+        this.totalBarracao = totais['BARRACAO'] || 0;
+        this.totalSitio = totais['SITIO'] || 0;
+        this.totalSobrado = totais['SOBRADO'] || 0;
+
+        this.totalImoveisDisponiveis = Object.values(totais)
+          .reduce((acc, v) => acc + (Number(v) || 0), 0);
+      },
+      error: (err) => console.error('Erro ao buscar totais:', err)
+    });
+  }
+
 }
