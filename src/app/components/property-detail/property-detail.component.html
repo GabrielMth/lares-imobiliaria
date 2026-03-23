@@ -1,0 +1,218 @@
+<!-- LOADING -->
+@if (isLoading) {
+  <div class="detail-loading">
+    <div class="loading-spinner"></div>
+    <p>Carregando imóvel...</p>
+  </div>
+}
+
+<!-- CONTEÚDO PRINCIPAL -->
+@if (!isLoading && property) {
+  <div class="detail-wrapper">
+
+    <!-- TOPO -->
+    <div class="detail-hero">
+      <div class="container">
+        <button class="btn-voltar" (click)="voltar()">
+          ← Voltar aos imóveis
+        </button>
+
+        <div class="hero-badges">
+          <span class="badge-tipo">{{ property.tipoImovel | titlecase }}</span>
+          <span class="badge-status"
+            [class.venda]="property.status === 'VENDA'"
+            [class.aluguel]="property.status === 'ALUGUEL'">
+            {{ property.status | titlecase }}
+          </span>
+          <span class="badge-ref">🏷️ Ref: {{ property.id }}</span>
+        </div>
+
+        <h1 class="hero-title">{{ property.titulo }}</h1>
+
+        @if (property.endereco) {
+          <p class="hero-location">
+            📍 {{ property.endereco.bairro }} — {{ property.cidade | titlecase }}
+          </p>
+        }
+      </div>
+    </div>
+
+    <!-- GALERIA + SIDEBAR -->
+    <div class="container detail-body">
+      <div class="detail-grid">
+
+        <!-- COLUNA ESQUERDA -->
+        <div class="detail-main">
+
+          <!-- GALERIA -->
+          <div class="gallery">
+            @if (property.urlsFotos?.length) {
+              <div class="gallery-main">
+                <img
+                  class="gallery-main-img"
+                  [src]="getImageUrl(property.urlsFotos[currentImageIndex], 'medium')"
+                  [alt]="property.titulo"
+                  (click)="openLightbox(currentImageIndex)"
+                />
+                @if (property.urlsFotos.length > 1) {
+                  <button class="gallery-nav prev" (click)="prevImage()">‹</button>
+                  <button class="gallery-nav next" (click)="nextImage()">›</button>
+                }
+                <span class="gallery-counter">{{ currentImageIndex + 1 }} / {{ property.urlsFotos.length }}</span>
+                <span class="gallery-hint">🔍 Clique para ampliar</span>
+              </div>
+            }
+
+            @if (property.urlsFotos.length > 1) {
+              <div class="gallery-thumbs">
+                @for (img of property.urlsFotos; track i; let i = $index) {
+                  <img
+                    class="gallery-thumb"
+                    [src]="getImageUrl(img, 'thumb')"
+                    [alt]="property.titulo + ' foto ' + (i + 1)"
+                    [class.active]="i === currentImageIndex"
+                    loading="lazy"
+                    (click)="setImage(i)"
+                  />
+                }
+              </div>
+            }
+          </div>
+
+          <!-- DESCRIÇÃO -->
+          @if (property.descricao) {
+            <div class="detail-section">
+              <h2 class="section-heading">Sobre o imóvel</h2>
+              <p class="detail-description">{{ property.descricao }}</p>
+            </div>
+          }
+
+          <!-- ENDEREÇO -->
+          @if (property.endereco) {
+            <div class="detail-section">
+              <h2 class="section-heading">Localização</h2>
+              <div class="address-grid">
+                @if (property.endereco.logradouro) {
+                  <div class="address-item">
+                    <span class="address-label">Logradouro</span>
+                    <span class="address-value">{{ property.endereco.logradouro }}, {{ property.endereco.numero }}</span>
+                  </div>
+                }
+                <div class="address-item">
+                  <span class="address-label">Bairro</span>
+                  <span class="address-value">{{ property.endereco.bairro }}</span>
+                </div>
+                <div class="address-item">
+                  <span class="address-label">Cidade</span>
+                  <span class="address-value">{{ property.cidade | titlecase }}</span>
+                </div>
+                @if (property.endereco.cep) {
+                  <div class="address-item">
+                    <span class="address-label">CEP</span>
+                    <span class="address-value">{{ property.endereco.cep }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+
+        </div>
+
+        <!-- COLUNA DIREITA: sidebar -->
+        <aside class="detail-sidebar">
+          <div class="sidebar-card">
+            <p class="sidebar-price">{{ formatPrice(property.valor) }}</p>
+
+            <div class="features-grid">
+              @if (property.quartos) {
+                <div class="feature-item">
+                  <span class="feature-icon">🛏️</span>
+                  <span class="feature-value">{{ property.quartos }}</span>
+                  <span class="feature-label">Quartos</span>
+                </div>
+              }
+              @if (property.suites) {
+                <div class="feature-item">
+                  <span class="feature-icon">🛌</span>
+                  <span class="feature-value">{{ property.suites }}</span>
+                  <span class="feature-label">Suítes</span>
+                </div>
+              }
+              @if (property.banheiros) {
+                <div class="feature-item">
+                  <span class="feature-icon">🚿</span>
+                  <span class="feature-value">{{ property.banheiros }}</span>
+                  <span class="feature-label">Banheiros</span>
+                </div>
+              }
+              @if (property.vagasGaragem) {
+                <div class="feature-item">
+                  <span class="feature-icon">🚗</span>
+                  <span class="feature-value">{{ property.vagasGaragem }}</span>
+                  <span class="feature-label">Vagas</span>
+                </div>
+              }
+              <div class="feature-item">
+                <span class="feature-icon">📐</span>
+                <span class="feature-value">{{ property.areaTotal }}</span>
+                <span class="feature-label">m² total</span>
+              </div>
+              @if (property.areaConstruida) {
+                <div class="feature-item">
+                  <span class="feature-icon">🏗️</span>
+                  <span class="feature-value">{{ property.areaConstruida }}</span>
+                  <span class="feature-label">m² construído</span>
+                </div>
+              }
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <button class="btn btn-whatsapp w-full" (click)="sendWhatsApp()">
+              📱 Mostrar Interesse via WhatsApp
+            </button>
+
+            <p class="sidebar-ref">Referência: #{{ property.id }}</p>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- LIGHTBOX (dentro do @if principal para ter acesso ao property sem null) -->
+  @if (showLightbox) {
+    <div class="lightbox-overlay" (click)="closeLightbox()">
+      <div class="lightbox-content" (click)="$event.stopPropagation()">
+        <button class="lightbox-close" (click)="closeLightbox()">✕</button>
+
+        @if (property.urlsFotos.length > 1) {
+          <button class="lightbox-nav prev" (click)="prevLightboxImage(); $event.stopPropagation()">‹</button>
+        }
+
+        <img
+          class="lightbox-image"
+          [src]="getImageUrl(property.urlsFotos[lightboxImageIndex], 'full')"
+          [alt]="property.titulo"
+        />
+
+        @if (property.urlsFotos.length > 1) {
+          <button class="lightbox-nav next" (click)="nextLightboxImage(); $event.stopPropagation()">›</button>
+        }
+
+        <div class="lightbox-thumbs">
+          @for (img of property.urlsFotos; track i; let i = $index) {
+            <img
+              class="lightbox-thumb"
+              [src]="getImageUrl(img, 'thumb')"
+              loading="lazy"
+              [class.active]="i === lightboxImageIndex"
+              (click)="lightboxImageIndex = i; $event.stopPropagation()"
+            />
+          }
+        </div>
+      </div>
+    </div>
+  }
+}

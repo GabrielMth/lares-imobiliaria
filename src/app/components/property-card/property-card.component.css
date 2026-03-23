@@ -9,6 +9,13 @@
   height: 100%;
 }
 
+.property-actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .property-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
@@ -286,7 +293,6 @@
 
 .w-full {
   width: 100%;
-  margin-top: auto;
 }
 
 @media (max-width: 768px) {

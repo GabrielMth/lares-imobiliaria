@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Property } from '../../models/property.model';
 import { environment } from '../../../environments/enviroment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-property-card',
@@ -16,6 +17,8 @@ export class PropertyCardComponent {
   currentImageIndex = 0;
   lightboxImageIndex = 0;
   showLightbox = false;
+
+  constructor(private router: Router) { }
 
   // Base da API (produção / dev)
   apiUrl = environment.apiUrl.replace(/\/$/, '');
@@ -105,6 +108,10 @@ export class PropertyCardComponent {
 
   get fotos(): string[] {
     return this.property?.urlsFotos ?? [];
+  }
+
+  verDetalhes() {
+    this.router.navigate(['/imovel', this.property.id]);
   }
 
 }

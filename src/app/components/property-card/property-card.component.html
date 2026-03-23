@@ -75,9 +75,14 @@
 
     <p class="property-description">{{ property.descricao }}</p>
 
-    <button class="btn btn-whatsapp w-full" (click)="sendWhatsApp()">
-      📱 Mostrar Interesse
-    </button>
+    <div class="property-actions">
+      <button class="btn btn-primary w-full" (click)="verDetalhes()">
+        🔍 Ver Mais
+      </button>
+      <button class="btn btn-whatsapp w-full" (click)="sendWhatsApp()">
+        📱 Mostrar Interesse
+      </button>
+    </div>
   </div>
 </div>
 
