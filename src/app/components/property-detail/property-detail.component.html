@@ -10,35 +10,14 @@
 @if (!isLoading && property) {
   <div class="detail-wrapper">
 
-    <!-- TOPO -->
-    <div class="detail-hero">
-      <div class="container">
-        <button class="btn-voltar" (click)="voltar()">
-          ← Voltar aos imóveis
-        </button>
-
-        <div class="hero-badges">
-          <span class="badge-tipo">{{ property.tipoImovel | titlecase }}</span>
-          <span class="badge-status"
-            [class.venda]="property.status === 'VENDA'"
-            [class.aluguel]="property.status === 'ALUGUEL'">
-            {{ property.status | titlecase }}
-          </span>
-          <span class="badge-ref">🏷️ Ref: {{ property.id }}</span>
-        </div>
-
-        <h1 class="hero-title">{{ property.titulo }}</h1>
-
-        @if (property.endereco) {
-          <p class="hero-location">
-            📍 {{ property.endereco.bairro }} — {{ property.cidade | titlecase }}
-          </p>
-        }
-      </div>
-    </div>
-
     <!-- GALERIA + SIDEBAR -->
     <div class="container detail-body">
+
+      <!-- BOTÃO VOLTAR -->
+      <div class="detail-top">
+        <button class="btn-voltar" (click)="voltar()">← Voltar aos imóveis</button>
+      </div>
+
       <div class="detail-grid">
 
         <!-- COLUNA ESQUERDA -->
@@ -46,7 +25,7 @@
 
           <!-- GALERIA -->
           <div class="gallery">
-            @if (property.urlsFotos?.length) {
+            @if (property.urlsFotos.length) {
               <div class="gallery-main">
                 <img
                   class="gallery-main-img"
@@ -92,12 +71,6 @@
             <div class="detail-section">
               <h2 class="section-heading">Localização</h2>
               <div class="address-grid">
-                @if (property.endereco.logradouro) {
-                  <div class="address-item">
-                    <span class="address-label">Logradouro</span>
-                    <span class="address-value">{{ property.endereco.logradouro }}, {{ property.endereco.numero }}</span>
-                  </div>
-                }
                 <div class="address-item">
                   <span class="address-label">Bairro</span>
                   <span class="address-value">{{ property.endereco.bairro }}</span>
@@ -106,12 +79,7 @@
                   <span class="address-label">Cidade</span>
                   <span class="address-value">{{ property.cidade | titlecase }}</span>
                 </div>
-                @if (property.endereco.cep) {
-                  <div class="address-item">
-                    <span class="address-label">CEP</span>
-                    <span class="address-value">{{ property.endereco.cep }}</span>
-                  </div>
-                }
+
               </div>
             </div>
           }
@@ -121,6 +89,27 @@
         <!-- COLUNA DIREITA: sidebar -->
         <aside class="detail-sidebar">
           <div class="sidebar-card">
+
+            <!-- título + localização + badges -->
+            <div class="sidebar-header">
+              <div class="sidebar-badges">
+                <span class="badge-tipo">{{ property.tipoImovel | titlecase }}</span>
+                <span class="badge-status"
+                  [class.venda]="property.status === 'VENDA'"
+                  [class.aluguel]="property.status === 'ALUGUEL'">
+                  {{ property.status | titlecase }}
+                </span>
+              </div>
+              <h2 class="sidebar-title">{{ property.titulo }}</h2>
+              @if (property.endereco) {
+                <p class="sidebar-location">
+                  📍 {{ property.endereco.bairro }} — {{ property.cidade | titlecase }}
+                </p>
+              }
+            </div>
+
+            <div class="sidebar-divider"></div>
+
             <p class="sidebar-price">{{ formatPrice(property.valor) }}</p>
 
             <div class="features-grid">
@@ -181,7 +170,7 @@
 
   </div>
 
-  <!-- LIGHTBOX (dentro do @if principal para ter acesso ao property sem null) -->
+  <!-- LIGHTBOX -->
   @if (showLightbox) {
     <div class="lightbox-overlay" (click)="closeLightbox()">
       <div class="lightbox-content" (click)="$event.stopPropagation()">

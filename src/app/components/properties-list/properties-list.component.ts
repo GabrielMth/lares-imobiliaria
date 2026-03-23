@@ -5,6 +5,9 @@ import { PropertyCardComponent } from '../property-card/property-card.component'
 import { PaginationComponent } from '../pagination/pagination.component';
 import { PropertyService } from '../../services/property-service';
 import { Property } from '../../models/property.model';
+import { PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+
 
 @Component({
   selector: 'app-properties-list',
@@ -33,7 +36,10 @@ export class PropertiesListComponent implements OnInit {
 
   isLoading = true;
 
-  constructor(private propertyService: PropertyService) { }
+  constructor(
+    private propertyService: PropertyService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) { }
 
   ngOnInit() {
     this.loadProperties(0);
@@ -51,7 +57,7 @@ export class PropertiesListComponent implements OnInit {
     this.propertyService.buscar(filtros, page, this.pageSize).subscribe({
       next: (pageResponse) => {
         this.properties = pageResponse.content;
-        this.filteredProperties = pageResponse.content; // ✅ aqui já vem filtrado do backend
+        this.filteredProperties = pageResponse.content;
 
         this.totalPages = pageResponse.totalPages;
         this.totalElements = pageResponse.totalElements;
@@ -127,7 +133,7 @@ export class PropertiesListComponent implements OnInit {
     this.selectedBedrooms = 'todos';
     this.minPrice = 0;
     this.maxPrice = 1000000000;
-    this.onlyCommercial = false; // ✅ importante
+    this.onlyCommercial = false;
     this.loadProperties(0);
   }
 
@@ -137,6 +143,7 @@ export class PropertiesListComponent implements OnInit {
   // UX
   // -----------------------------
   scrollToTop() {
+    if (!isPlatformBrowser(this.platformId)) return;
     const element = document.getElementById('properties');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -145,8 +152,8 @@ export class PropertiesListComponent implements OnInit {
 
 
   toggleCommercial() {
-    this.onlyCommercial = true;     // ✅ força comercial
-    this.selectedType = 'todos';    // ✅ limpa tipo
+    this.onlyCommercial = true;
+    this.selectedType = 'todos';
     this.onAnyFilterChanged();
   }
 

@@ -1,0 +1,70 @@
+<div class="category-wrapper">
+
+  <!-- HERO -->
+  <div class="category-hero">
+    <div class="container">
+      <a routerLink="/" class="btn-voltar">← Voltar</a>
+      @if (config) {
+        <h1 class="category-h1">{{ config.h1 }}</h1>
+        <p class="category-sub">{{ totalElements }} imóveis encontrados em {{ config.cidade }}</p>
+      }
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div class="container category-body">
+    @if (isLoading) {
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Carregando imóveis...</p>
+      </div>
+    }
+
+    @if (!isLoading && properties.length === 0) {
+      <div class="empty">
+        <p>😔 Nenhum imóvel encontrado nesta categoria.</p>
+        <a routerLink="/" class="btn btn-primary">Ver todos os imóveis</a>
+      </div>
+    }
+
+    @if (!isLoading && properties.length > 0) {
+      <div class="properties-grid">
+        @for (property of properties; track property.id) {
+          <a [routerLink]="['/imovel', property.id]" class="property-card">
+            <div class="card-image">
+              <img
+                [src]="getImageUrl(property.urlsFotos[0] || '')"
+                [alt]="property.titulo"
+                loading="lazy"
+              />
+              <span class="badge-tipo">{{ property.tipoImovel | titlecase }}</span>
+              <span class="badge-status" [class.venda]="property.status === 'VENDA'" [class.aluguel]="property.status === 'ALUGUEL'">
+                {{ property.status | titlecase }}
+              </span>
+            </div>
+            <div class="card-body">
+              <h2 class="card-title">{{ property.titulo }}</h2>
+              <p class="card-location">📍 {{ property.endereco.bairro }} — {{ property.cidade | titlecase }}</p>
+              <p class="card-price">{{ formatPrice(property.valor) }}</p>
+              <div class="card-features">
+                @if (property.quartos) { <span>🛏️ {{ property.quartos }} Quartos</span> }
+                @if (property.banheiros) { <span>🚿 {{ property.banheiros }} Banheiros</span> }
+                <span>📐 {{ property.areaTotal }}m²</span>
+              </div>
+            </div>
+          </a>
+        }
+      </div>
+
+      <!-- PAGINAÇÃO -->
+      @if (totalPages > 1) {
+        <div class="pagination">
+          <button [disabled]="currentPage === 0" (click)="onPageChange(currentPage - 1)">◀</button>
+          <span>Página {{ currentPage + 1 }} de {{ totalPages }}</span>
+          <button [disabled]="currentPage + 1 >= totalPages" (click)="onPageChange(currentPage + 1)">▶</button>
+        </div>
+      }
+    }
+  </div>
+
+</div>

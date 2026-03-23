@@ -88,9 +88,9 @@ export class PropertyFormComponent implements OnInit {
       try {
         const c = await this.compressImage(
           f,
-          1600,        // maior lado (px)
-          0.60,        // qualidade
-          'image/webp' // formato final
+          1600,
+          0.60,
+          'image/jpeg' // ← muda de 'image/webp' para 'image/jpeg'
         );
         compressed.push(c);
       } catch {
@@ -308,7 +308,7 @@ export class PropertyFormComponent implements OnInit {
     file: File,
     maxSide = 1600,
     quality = 0.75,
-    mime: 'image/webp' | 'image/jpeg' = 'image/webp'
+    mime: 'image/webp' | 'image/jpeg' = 'image/jpeg' // ← muda default para jpeg
   ): Promise<File> {
     // Se já for pequeno, não mexe (opcional)
     const maxBytesNoCompress = 900 * 1024; // 900KB

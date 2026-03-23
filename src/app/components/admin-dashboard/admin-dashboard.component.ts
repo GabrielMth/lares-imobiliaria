@@ -171,15 +171,9 @@ export class AdminDashboardComponent implements OnInit {
   getPhotoUrl(property: Property, index: number = 0): string {
     const fotos = property.urlsFotos ?? [];
     if (fotos.length > 0) {
-      return this.joinUrl(this.apiUrl, `/uploads/${fotos[index]}`);
+      return `${this.apiUrl}/uploads/${fotos[index]}`;
     }
     return 'assets/images/sem-imagem.jpg';
-  }
-
-  private joinUrl(base: string, path: string): string {
-    const b = base.replace(/\/+$/, '');
-    const p = path.replace(/^\/+/, '');
-    return `${b}/${p}`;
   }
 
   getTotalImoveis(): number {

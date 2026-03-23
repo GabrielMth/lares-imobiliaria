@@ -1,3 +1,11 @@
+/* Box-sizing global para este componente */
+.property-card,
+.property-card *,
+.property-card *::before,
+.property-card *::after {
+  box-sizing: border-box;
+}
+
 .property-card {
   background: var(--color-white);
   border-radius: 16px;
@@ -7,6 +15,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  max-width: 100%;
+  width: 100%;
 }
 
 .property-actions {
@@ -50,6 +60,7 @@
 
 .property-images {
   position: relative;
+  width: 100%;
 }
 
 .main-image-container {
@@ -113,6 +124,9 @@
   display: flex;
   gap: 8px;
   z-index: 2;
+  max-width: calc(100% - 30px);
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .indicator {
@@ -122,6 +136,7 @@
   background: rgba(255, 255, 255, 0.6);
   cursor: pointer;
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .indicator.active {
@@ -145,6 +160,10 @@
   letter-spacing: 0.5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   font-family: 'Inter', sans-serif;
+  max-width: calc(50% - 20px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .featured-badge {
@@ -161,6 +180,10 @@
   letter-spacing: 0.5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   font-family: 'Inter', sans-serif;
+  max-width: calc(50% - 20px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .transaction-badge {
@@ -176,6 +199,10 @@
   letter-spacing: 0.5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   font-family: 'Inter', sans-serif;
+  max-width: calc(50% - 20px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .transaction-badge.venda {
@@ -192,6 +219,7 @@
   gap: 4px;
   padding: 8px;
   background: var(--color-light-gray);
+  width: 100%;
 }
 
 .thumbnail {
@@ -220,6 +248,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  width: 100%;
 }
 
 .property-title {
@@ -228,6 +257,8 @@
   color: var(--color-primary);
   margin-bottom: 0.75rem;
   line-height: 1.3;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .property-location {
@@ -237,6 +268,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .property-price {
@@ -244,6 +276,7 @@
   font-weight: 900;
   color: #176396;
   margin-bottom: 1rem;
+  word-wrap: break-word;
 }
 
 .property-features {
@@ -253,6 +286,19 @@
   margin-bottom: 1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--color-light-gray);
+}
+
+.property-features span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: var(--color-light-gray);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
 }
 
 .feature {
@@ -272,21 +318,24 @@
   font-size: 0.95rem;
   line-height: 1.6;
   margin-bottom: 1.5rem;
-
-  max-height: 120px;   /* ajuste: 100–160 */
-  overflow-y: auto;    /* ✅ scroll */
+  max-height: 120px;
+  overflow-y: auto;
   overflow-x: hidden;
-  padding-right: 6px;  /* espaço pro scrollbar */
+  padding-right: 6px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* scrollbar discreto (Chrome/Edge/Safari) */
 .property-description::-webkit-scrollbar {
   width: 6px;
 }
+
 .property-description::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.25);
+  background: rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 }
+
 .property-description::-webkit-scrollbar-track {
   background: transparent;
 }
@@ -295,26 +344,25 @@
   width: 100%;
 }
 
-@media (max-width: 768px) {
-  .main-image-container {
-    height: 250px;
-  }
-
-  .property-title {
-    font-size: 1.25rem;
-  }
-
-  .property-price {
-    font-size: 1.5rem;
-  }
-
-  .thumbnail-container {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .thumbnail {
-    height: 50px;
-  }
+.reference-badge {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  z-index: 3;
+  max-width: calc(100% - 24px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Lightbox Styles */
@@ -446,6 +494,7 @@
   border-radius: 25px;
   backdrop-filter: blur(10px);
   text-align: center;
+  max-width: calc(100% - 40px);
 }
 
 .lightbox-info h4 {
@@ -494,7 +543,90 @@
   border-color: rgb(36, 140, 189);
 }
 
+/* ========== RESPONSIVIDADE MOBILE ========== */
+
+/* Tablets e dispositivos médios */
+@media (max-width: 1024px) {
+  .main-image-container {
+    height: 280px;
+  }
+
+  .property-title {
+    font-size: 1.35rem;
+  }
+
+  .property-price {
+    font-size: 1.6rem;
+  }
+}
+
+/* Mobile */
 @media (max-width: 768px) {
+  .main-image-container {
+    height: 250px;
+  }
+
+  .property-title {
+    font-size: 1.25rem;
+  }
+
+  .property-price {
+    font-size: 1.5rem;
+  }
+
+  /* Thumbnails: 3 colunas em mobile */
+  .thumbnail-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .thumbnail {
+    height: 50px;
+  }
+
+  /* Badges menores em mobile */
+  .property-badge,
+  .featured-badge,
+  .transaction-badge {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
+
+  .transaction-badge {
+    top: 50px;
+  }
+
+  /* Botões de navegação menores */
+  .nav-button {
+    width: 35px;
+    height: 35px;
+    font-size: 1.3rem;
+  }
+
+  .nav-button.prev {
+    left: 8px;
+  }
+
+  .nav-button.next {
+    right: 8px;
+  }
+
+  /* Content com menos padding */
+  .property-content {
+    padding: 1rem;
+  }
+
+  .property-features {
+    gap: 0.5rem;
+  }
+
+  .property-features span {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  /* Lightbox em mobile */
   .lightbox-content {
     width: 95%;
     height: 95vh;
@@ -526,6 +658,11 @@
     height: calc(100% - 120px);
   }
 
+  .lightbox-info {
+    padding: 0.75rem 1rem;
+    max-width: calc(100% - 20px);
+  }
+
   .lightbox-info h4 {
     font-size: 1rem;
   }
@@ -545,26 +682,89 @@
   }
 }
 
+/* Mobile muito pequeno */
+@media (max-width: 480px) {
+  .main-image-container {
+    height: 220px;
+  }
 
-.reference-badge {
-  position: absolute;
-  bottom: 12px;
-  left: 12px;
+  .property-title {
+    font-size: 1.1rem;
+  }
 
-  background-color: rgba(0, 0, 0, 0.75);
-  color: #fff;
+  .property-price {
+    font-size: 1.35rem;
+  }
 
-  padding: 4px 6px;
-  border-radius: 4px;
+  .property-content {
+    padding: 0.875rem;
+  }
 
-  font-size: 0.75rem;
-  font-weight: 600;
+  /* Thumbnails: 3 colunas ainda */
+  .thumbnail-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    padding: 4px;
+  }
 
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  .thumbnail {
+    height: 45px;
+  }
 
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  z-index: 3;
+  /* Badges ainda menores */
+  .property-badge,
+  .featured-badge,
+  .transaction-badge {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
+    max-width: calc(50% - 15px);
+  }
+
+  .transaction-badge {
+    top: 45px;
+  }
+
+  .reference-badge {
+    font-size: 0.7rem;
+    padding: 3px 5px;
+  }
+
+  /* Botões ainda menores */
+  .nav-button {
+    width: 30px;
+    height: 30px;
+    font-size: 1.2rem;
+  }
+
+  .nav-button.prev {
+    left: 5px;
+  }
+
+  .nav-button.next {
+    right: 5px;
+  }
+
+  .image-indicators {
+    bottom: 10px;
+    gap: 6px;
+  }
+
+  .indicator {
+    width: 8px;
+    height: 8px;
+  }
+
+  .indicator.active {
+    width: 24px;
+  }
+
+  .property-features span {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.5rem;
+  }
+
+  .property-description {
+    font-size: 0.875rem;
+    max-height: 100px;
+  }
 }
-
